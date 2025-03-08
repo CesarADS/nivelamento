@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Cadastro_pedidos from "./components/pages/Cadastro_pedidos";
 import Listagem_pedidos from "./components/pages/Listagem_pedidos";
 import Cadastro_produtos from "./components/pages/Cadastro_produtos";
@@ -7,13 +7,16 @@ import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 import Login from "./components/pages/Login";
 
-export default function AppRoutes() {
+function Layout() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+
   return (
-    <BrowserRouter>
-      <Header />
+    <>
+      {!isLoginPage && <Header />}
 
       <div className="d-flex">
-        <Sidebar />
+        {!isLoginPage && <Sidebar />}
 
         <div className="flex-grow-1 p-4">
           <Routes>
@@ -25,7 +28,15 @@ export default function AppRoutes() {
         </div>
       </div>
 
-      <Footer />
+      {!isLoginPage && <Footer />}
+    </>
+  );
+}
+
+export default function AppRoutes() {
+  return (
+    <BrowserRouter>
+      <Layout />
     </BrowserRouter>
   );
 }

@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import ItemFixoMenu from "../ItemFixoMenu";
+import ItemSubMenu from "../ItemSubMenu";
 import styles from "./sidebar.module.css";
 
 export default function Sidebar() {
@@ -15,36 +16,15 @@ export default function Sidebar() {
         />
       </div>
 
-      <ul className="list-unstyled ms-3 nav flex-column">
-        <li className="nav-item">
-          <Link to="/" className="nav-link text-light">
-            🏠︎ Home
-          </Link>
-        </li>
+      <ul className="list-unstyled ms-3 nav flex-column mt-3">
+        <ItemFixoMenu link="/">🏠 Home</ItemFixoMenu>
 
         <li className="nav-item">
-          <a
-            className="nav-link text-light"
-            data-bs-toggle="collapse"
-            href="#submenuCadastro"
-            role="button"
-            aria-expanded="false"
-            aria-controls="submenuCadastro"
-          >
-            ✎ Cadastro
-          </a>
+          <ItemSubMenu id_item="submenuCadastro">📝 Cadastro</ItemSubMenu>
 
           <ul className="collapse list-unstyled ms-3" id="submenuCadastro">
-            <li>
-              <Link to="/cadastro-produtos" className="nav-link text-light">
-                📦 Produto
-              </Link>
-            </li>
-            <li>
-              <Link to="/cadastro-pedidos" className="nav-link text-light">
-                🛒 Pedido
-              </Link>
-            </li>
+            <ItemFixoMenu link="/cadastro-produtos">📦 Produto</ItemFixoMenu>
+            <ItemFixoMenu link="/cadastro-pedidos">🛒 Pedido</ItemFixoMenu>
           </ul>
         </li>
       </ul>
