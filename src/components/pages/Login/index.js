@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { UsuarioContext, useUsuarioContext } from "../../../contexts/Usuario";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
 
@@ -11,12 +12,22 @@ export default function Login() {
   
   function handleSubmit(e){
     e.preventDefault();
-    if(usuarioInformado == "Cesar" && senha === "1") {
-      login({nome: usuarioInformado, usuarioInformado, logado: true});
+
+    
+    // Sem esperar
+    /* axios.get("https://viacep.com.br/ws/01001000/json/")
+    .then((response) => {
+      setUsuarioInformado(response.data.logradouro);
+    }); */
+    
+
+    if (usuarioInformado == "Cesar" && senha === "1") {
+      login({ nome: usuarioInformado, usuarioInformado, logado: true });
       navigate("/");
     } else {
-      alert("Game over!")
+      alert("Game over!");
     }
+
   }
 
   return (

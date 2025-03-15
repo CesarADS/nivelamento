@@ -31,6 +31,7 @@ export default function AppRoutes() {
             path="/*"
             element={
               <PrivateRoute>
+                <ProtectedLayout>
                 <Routes>
                   <Route path="/" element={<Listagem_pedidos />} />
                   <Route
@@ -42,6 +43,7 @@ export default function AppRoutes() {
                     element={<Cadastro_produtos />}
                   />
                 </Routes>
+                </ProtectedLayout>
               </PrivateRoute>
             }
           />
@@ -49,17 +51,19 @@ export default function AppRoutes() {
       </UsuarioLogadoProvider>
     </BrowserRouter>
   );
+
+function ProtectedLayout({ children }) {
+  return (
+    <>
+      <Header />
+      <div className="d-flex">
+        <Sidebar />
+        <div className="flex-grow-1 p-4">
+          {children}
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 }
-
-/*{ <Header />
-
-        <div className="d-flex">
-          <Sidebar />
-
-          <div className="flex-grow-1 p-4"></div> }*/
-
-/*   </div>
-  </div>
-
-  <Footer /> */
-
+}
