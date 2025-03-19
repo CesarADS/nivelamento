@@ -14,12 +14,24 @@ export default function Login() {
     e.preventDefault();
 
     
-    // Sem esperar
+    // GET Sem await
     /* axios.get("https://viacep.com.br/ws/01001000/json/")
     .then((response) => {
       setUsuarioInformado(response.data.logradouro);
     }); */
-    
+
+    // POST Sem await
+    /* const data = {
+      title: "Teste de POST",
+      body: "Exemplo de requisição POST",
+      userId: 1
+    };
+
+    axios.post("https://jsonplaceholder.typicode.com/posts", data)
+    .then((response) => {
+      alert(JSON.stringify(response.data));
+    });
+     */
 
     if (usuarioInformado == "Cesar" && senha === "1") {
       login({ nome: usuarioInformado, usuarioInformado, logado: true });
