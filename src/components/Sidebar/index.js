@@ -25,6 +25,7 @@ export default function Sidebar() {
           <ul className="collapse list-unstyled ms-3" id="submenuCadastro">
             <ItemFixoMenu link="/cadastro-produtos">📦 Produto</ItemFixoMenu>
             <ItemFixoMenu link="/cadastro-pedidos">🛒 Pedido</ItemFixoMenu>
+            <ItemFixoMenu link="/cadastro-usuario">👤 Usuário</ItemFixoMenu>
           </ul>
         </li>
       </ul>

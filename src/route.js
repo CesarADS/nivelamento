@@ -8,6 +8,7 @@ import Sidebar from "./components/Sidebar";
 import Login from "./components/pages/Login";
 import UsuarioLogadoProvider, { UsuarioContext } from "./contexts/Usuario";
 import { useContext } from "react";
+import Cadastro_usuario from "./components/pages/Cadastro_usuario";
 
 function PrivateRoute({children}) {
 
@@ -42,6 +43,7 @@ export default function AppRoutes() {
                     path="/cadastro-produtos"
                     element={<Cadastro_produtos />}
                   />
+                  <Route path="/cadastro-usuario" element={<Cadastro_usuario />} />
                 </Routes>
                 </ProtectedLayout>
               </PrivateRoute>

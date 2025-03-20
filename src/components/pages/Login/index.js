@@ -10,10 +10,20 @@ export default function Login() {
   const {login} = useUsuarioContext(UsuarioContext);
   const navigate = useNavigate();
   
-  function handleSubmit(e){
+  async function handleSubmit(e){
     e.preventDefault();
 
-    
+    const response = await axios.get("http://localhost:3001/jogadores?login="+usuarioInformado+"&senha="+senha);
+
+    if (response.data.length > 0) {
+      login({ nome: usuarioInformado, usuarioInformado, logado: true });
+      navigate("/");
+    } else {
+      alert("Usuario e/ou senha incorretos!");
+      setUsuarioInformado("");
+      setSenha("");
+    }
+
     // GET Sem await
     /* axios.get("https://viacep.com.br/ws/01001000/json/")
     .then((response) => {
@@ -32,13 +42,6 @@ export default function Login() {
       alert(JSON.stringify(response.data));
     });
      */
-
-    if (usuarioInformado == "Cesar" && senha === "1") {
-      login({ nome: usuarioInformado, usuarioInformado, logado: true });
-      navigate("/");
-    } else {
-      alert("Game over!");
-    }
 
   }
 
