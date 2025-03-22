@@ -24,25 +24,6 @@ export default function Login() {
       setSenha("");
     }
 
-    // GET Sem await
-    /* axios.get("https://viacep.com.br/ws/01001000/json/")
-    .then((response) => {
-      setUsuarioInformado(response.data.logradouro);
-    }); */
-
-    // POST Sem await
-    /* const data = {
-      title: "Teste de POST",
-      body: "Exemplo de requisição POST",
-      userId: 1
-    };
-
-    axios.post("https://jsonplaceholder.typicode.com/posts", data)
-    .then((response) => {
-      alert(JSON.stringify(response.data));
-    });
-     */
-
   }
 
   return (
@@ -50,7 +31,7 @@ export default function Login() {
       <div className="col-md-6">
         <div className="card shadow-sm">
           <div className="card-header text-center">
-            <h4>Autentique-se</h4>
+            <h4>🔒 Autentique-se</h4>
           </div>
           <div className="card-body">
             <form onSubmit={handleSubmit}>
@@ -60,7 +41,7 @@ export default function Login() {
                 </label>
                 <input
                   type="text"
-                  value = {usuarioInformado}
+                  value={usuarioInformado}
                   onChange={(e) => setUsuarioInformado(e.target.value)}
                   className="form-control"
                   id="usuario"
@@ -80,7 +61,10 @@ export default function Login() {
                   name="senha"
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100">
+              <button
+                type="submit"
+                className="btn btn-primary w-100 bg-dark border-dark"
+              >
                 Login
               </button>
             </form>

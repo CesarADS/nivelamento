@@ -1,104 +1,102 @@
+import TitleTop from "../../TitleTop";
+import InputForm from "../../InputForm";
+import { useState } from "react";
+import axios from "axios";
+
+
 export default function Cadastro_usuario() {
+
+    const handleCepBlur = () => {
+      axios
+        .get(`https://viacep.com.br/ws/${cep}/json/`)
+        .then((response) => {
+          setLogradouro(response.data.logradouro);
+          setBairro(response.data.bairro);
+          setEstado(response.data.uf);
+        })
+        .catch((error) => {
+          alert("Erro ao buscar CEP:", error);
+        });
+    };
+  
+  // Estado para armazenar os dados dos inputs
+  const [cep, setCep] = useState("");
+  const [logradouro, setLogradouro] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [estado, setEstado] = useState("");
+
   return (
-    <form>
-      <div class="row">
-        <div class="form-group col-md-4">
-          <label for="inputEmail4">Email</label>
-          <input
+    <div className="d-flex flex-column justify-content-center align-items-center mt-4">
+      <TitleTop>👤 Cadastro de Usuário</TitleTop>
+      <form className="p-4 shadow rounded col-md-10 col-lg-8">
+        <div className="form-row">
+          <InputForm
+            label="Usuário:"
+            type="text"
+            id="inputUser"
+            placeholder="Digite seu nome usuário"
+          />
+          <InputForm
+            label="E-mail:"
             type="email"
-            class="form-control"
-            id="inputEmail4"
-            placeholder="Email"
+            id="inputEmail"
+            placeholder="Digite seu e-mail"
           />
-        </div>
-        <div class="form-group col-md-4">
-          <label for="inputPassword4">Senha</label>
-          <input
+          <InputForm
+            label="Senha:"
             type="password"
-            class="form-control"
-            id="inputPassword4"
-            placeholder="Senha"
+            id="inputPassword"
+            placeholder="Digite sua senha"
           />
+          <InputForm
+            label="Confirmar senha:"
+            type="password"
+            id="inputConfirmPassword"
+            placeholder="Digite sua senha novamente"
+          />
+          <InputForm
+            label="CEP:"
+            type="text"
+            id="inputCEP"
+            placeholder="Digite seu CEP"
+            value={cep}
+            onChange={(e) => setCep(e.target.value)}
+            onBlur={handleCepBlur}
+          />
+          <InputForm
+            label="Rua:"
+            type="text"
+            id="inputLogradouro"
+            placeholder="Nome da rua"
+            value={logradouro}
+            onChange={(e) => setLogradouro(e.target.value)}
+          />
+          <InputForm
+            label="Bairro:"
+            type="text"
+            id="inputBairro"
+            placeholder="Nome do bairro"
+            value={bairro}
+            onChange={(e) => setBairro(e.target.value)}
+          />
+          <InputForm
+            label="Estado:"
+            type="text"
+            id="inputUF"
+            placeholder="Nome do estado"
+            value={estado}
+            onChange={(e) => setEstado(e.target.value)}
+          />
+          <div className="row botaoCadastro">
+            <button
+              type="submit"
+              className={`btn btn-primary bg-dark border-dark mt-4 mb-2 col-md-2`}
+            >
+              Cadastrar
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="inputAddress">Endereço</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputAddress"
-          placeholder="Rua dos Bobos, nº 0"
-        />
-      </div>
-      <div class="form-group">
-        <label for="inputAddress2">Endereço 2</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputAddress2"
-          placeholder="Apartamento, hotel, casa, etc."
-        />
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputCity">Cidade</label>
-          <input type="text" class="form-control" id="inputCity" />
-        </div>
-        <div class="form-group col-md-4">
-          <label for="inputEstado">Estado</label>
-          <select id="inputEstado" class="form-control">
-            <option selected>Escolher...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <label for="inputCEP">CEP</label>
-          <input type="text" class="form-control" id="inputCEP" />
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="gridCheck" />
-          <label class="form-check-label" for="gridCheck">
-            Clique em mim
-          </label>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary">
-        Entrar
-      </button>
-    </form>
-    /*  <div className="d-flex justify-content-center align-items-center">
-        <div className="col-md-7">
-            <div className="card-header text-center mb-4">
-              <h2>Cadastro de usuário</h2>
-            </div>
-            <div className="card-body">
-              <form onSubmit="">
-                  <input
-                    type="text"
-                    placeholder="Digite seu login"
-                    value=""
-                    onChange=""
-                    className="form-control m-3"
-                    id="usuario"
-                    name="usuario"
-                  />
-                  <input
-                    type="password"
-                    placeholder="Digite sua senha"
-                    value=""
-                    onChange=""
-                    className="form-control m-3"
-                    id="senha"
-                    name="senha"
-                  />
-                <button type="submit" className="btn btn-primary w-100 m-3">
-                  Login
-                </button>
-              </form>
-            </div>
-        </div>
-      </div> */
+      </form>
+    </div>
   );
 }

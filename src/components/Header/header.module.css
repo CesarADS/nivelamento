@@ -1,6 +1,20 @@
 .header {
     display: flex;
     justify-content: space-between;
+    /* Distribui os itens entre as extremidades */
     align-items: center;
-    padding: 1.1em 20em;
+    /* Alinha verticalmente */
+    padding: 1.1em 2em;
+}
+
+.botaoLogout {
+    margin-left: auto;
+    /* Empurra o botão para a direita */
+}
+
+.textoPrincipal {
+    flex-grow: 1;
+    /* Faz o texto ocupar todo o espaço disponível */
+    text-align: center;
+    /* Centraliza o texto horizontalmente */
 }
