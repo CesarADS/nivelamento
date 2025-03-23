@@ -1,4 +1,4 @@
-import TitleTop from "../../TitleTop";
+import TitleTop from "../../components/TitleTop";
 
 export default function Listagem_pedidos() {
     return (

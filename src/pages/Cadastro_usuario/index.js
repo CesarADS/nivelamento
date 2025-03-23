@@ -1,5 +1,5 @@
-import TitleTop from "../../TitleTop";
-import InputForm from "../../InputForm";
+import TitleTop from "../../components/TitleTop";
+import InputForm from "../../components/InputForm";
 import { useState } from "react";
 import axios from "axios";
 
@@ -12,6 +12,7 @@ export default function Cadastro_usuario() {
         .then((response) => {
           setLogradouro(response.data.logradouro);
           setBairro(response.data.bairro);
+          setCidade(response.data.localidade);
           setEstado(response.data.uf);
         })
         .catch((error) => {
@@ -23,10 +24,11 @@ export default function Cadastro_usuario() {
   const [cep, setCep] = useState("");
   const [logradouro, setLogradouro] = useState("");
   const [bairro, setBairro] = useState("");
+  const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
 
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center mt-4">
+    <div className="d-flex flex-column justify-content-center align-items-center mt-3">
       <TitleTop>👤 Cadastro de Usuário</TitleTop>
       <form className="p-4 shadow rounded col-md-10 col-lg-8">
         <div className="form-row">
@@ -78,6 +80,14 @@ export default function Cadastro_usuario() {
             placeholder="Nome do bairro"
             value={bairro}
             onChange={(e) => setBairro(e.target.value)}
+          />
+          <InputForm
+            label="Cidade:"
+            type="text"
+            id="inputCidade"
+            placeholder="Nome da cidade"
+            value={cidade}
+            onChange={(e) => setCidade(e.target.value)}
           />
           <InputForm
             label="Estado:"

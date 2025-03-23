@@ -1,14 +1,15 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import Cadastro_pedidos from "./components/pages/Cadastro_pedidos";
-import Listagem_pedidos from "./components/pages/Listagem_pedidos";
-import Cadastro_produtos from "./components/pages/Cadastro_produtos";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
-import Login from "./components/pages/Login";
 import UsuarioLogadoProvider, { UsuarioContext } from "./contexts/Usuario";
 import { useContext } from "react";
-import Cadastro_usuario from "./components/pages/Cadastro_usuario";
+import Listagem_pedidos from "./pages/Listagem_pedidos";
+import Cadastro_pedidos from "./pages/Cadastro_pedidos";
+import Cadastro_produtos from "./pages/Cadastro_produtos";
+import Cadastro_usuario from "./pages/Cadastro_usuario";
+import Login from "./pages/Login";
+import Listagem_usuarios from "./pages/Listagem_usuarios";
 
 function PrivateRoute({children}) {
 
@@ -44,6 +45,7 @@ export default function AppRoutes() {
                     element={<Cadastro_produtos />}
                   />
                   <Route path="/cadastro-usuario" element={<Cadastro_usuario />} />
+                  <Route path="/visualizar-usuarios" element={<Listagem_usuarios />} />
                 </Routes>
                 </ProtectedLayout>
               </PrivateRoute>
