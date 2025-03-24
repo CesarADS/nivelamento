@@ -13,7 +13,7 @@ export default function Login() {
   async function handleSubmit(e){
     e.preventDefault();
 
-    const response = await axios.get("http://localhost:3001/jogadores?login="+usuarioInformado+"&senha="+senha);
+    const response = await axios.get("http://localhost:3001/usuarios?usuario="+usuarioInformado+"&senha="+senha);
 
     if (response.data.length > 0) {
       login({ nome: usuarioInformado, usuarioInformado, logado: true });

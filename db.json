@@ -1,44 +1,28 @@
 {
-    "jogadores": [
-        {
-            "nome": "João",
-            "wins": 5,
-            "loses": 2,
-            "age": 25,
-            "login": "joao",
-            "senha": "123"
-        },
-        {
-            "nome": "Mario",
-            "wins": 3,
-            "loses": 1,
-            "age": 20,
-            "login": "lfneqlo7",
-            "senha": "rGWg06mfu4bB"
-        },
-        {
-            "nome": "Pedro",
-            "wins": 2,
-            "loses": 3,
-            "age": 22,
-            "login": "j9b0ogud",
-            "senha": "ujxxINhUDqag"
-        },
-        {
-            "nome": "Luiz",
-            "wins": 1,
-            "loses": 4,
-            "age": 23,
-            "login": "1ea5nm1u",
-            "senha": "dRMHcRmYBlIZ"
-        },
-        {
-            "nome": "Carlos",
-            "wins": 0,
-            "loses": 5,
-            "age": 21,
-            "login": "55lwnwjl",
-            "senha": "UBmQCQDkTHVm"
-        }
-    ]
+  "usuarios": [
+    {
+      "id": "6727",
+      "usuario": "teste12",
+      "email": "teste12@gmail.com",
+      "senha": "123",
+      "cep": "88812860",
+      "rua": "Rodovia Leonardo Bialecki",
+      "bairro": "Linha Batista",
+      "cidade": "Criciúma",
+      "estado": "SC",
+      "status": "ativo"
+    },
+    {
+      "status": "excluido",
+      "id": "bb0e"
+    },
+    {
+      "status": "excluido",
+      "id": "179b"
+    },
+    {
+      "status": "excluido",
+      "id": "ab96"
+    }
+  ]
 }

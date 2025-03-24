@@ -9,7 +9,7 @@ export default function Listagem_usuarios() {
 
     useEffect(() => {
       axios
-        .get("http://localhost:3001/jogadores")
+        .get("http://localhost:3001/usuarios?status=ativo")
         .then((response) => {
           setUsuarios(response.data);
         })
@@ -18,7 +18,7 @@ export default function Listagem_usuarios() {
         });
     }, []);
 
-    const colunas = ["nome", "wins", "loses", "age", "login", "senha", "id"];
+    const colunas = ["usuario", "email", "senha", "cep", "rua", "bairro", "cidade", "estado"];
 
   return (
     <div>

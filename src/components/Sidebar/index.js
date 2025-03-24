@@ -17,10 +17,10 @@ export default function Sidebar() {
       </div>
 
       <ul className="list-unstyled ms-3 nav flex-column mt-3">
-        <ItemFixoMenu link="/">→ Home</ItemFixoMenu>
+        <ItemFixoMenu link="/">Home</ItemFixoMenu>
 
         <li className="nav-item">
-          <ItemSubMenu id_item="submenuListagem">→ Visualizar</ItemSubMenu>
+          <ItemSubMenu id_item="submenuListagem">Visualizar</ItemSubMenu>
 
           <ul className="collapse list-unstyled ms-3" id="submenuListagem">
             <ItemFixoMenu link="/visualizar-produtos">➤ Produtos</ItemFixoMenu>
@@ -30,7 +30,7 @@ export default function Sidebar() {
         </li>
 
         <li className="nav-item">
-          <ItemSubMenu id_item="submenuCadastro">→ Cadastrar</ItemSubMenu>
+          <ItemSubMenu id_item="submenuCadastro">Cadastrar</ItemSubMenu>
 
           <ul className="collapse list-unstyled ms-3" id="submenuCadastro">
             <ItemFixoMenu link="/cadastro-produtos">➤ Produto</ItemFixoMenu>
