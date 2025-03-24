@@ -73,7 +73,8 @@ export default function Cadastro_usuario() {
       usuario.length > 0 &&
       email.length > 0 &&
       senha.length > 0 &&
-      confirmarSenha.length > 0
+      confirmarSenha.length > 0 &&
+      cep.length > 0
     ) {
       setExibirModal(true);
     } else {
