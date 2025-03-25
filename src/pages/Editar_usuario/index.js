@@ -61,7 +61,7 @@ export default function Editar_usuario() {
         setEstado(response.data.uf);
       })
       .catch((error) => {
-        alert("Erro ao buscar CEP:", error);
+        console.log("Erro ao buscar CEP:", error);
       });
   };
 
@@ -71,6 +71,7 @@ export default function Editar_usuario() {
     if (senha === confirmarSenha) {
       axios
         .put("http://localhost:3001/usuarios/" + id_user, {
+          id: id_user,
           usuario: usuario,
           email: email,
           senha: senha,
@@ -91,7 +92,7 @@ export default function Editar_usuario() {
           }, 3000);
         })
         .catch((error) => {
-          alert("Erro ao cadastrar:", error);
+          alert("Erro ao editar:", error);
         });
     } else {
       setAlert({
@@ -103,7 +104,6 @@ export default function Editar_usuario() {
     }
   }
 
-  // Corrigido: Apenas define o estado, sem retornar JSX
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -126,7 +126,7 @@ export default function Editar_usuario() {
   return (
     <div className="d-flex flex-column justify-content-center align-items-center mt-3 mb-4">
       <ModalBootstrap
-        titulo="Cadastro de usuário"
+        titulo="Editação de usuário"
         texto={`Você está prestes a editar o usuário: ${usuario}. Deseja continuar?`}
         botaoConfirmar={botaoConfirmar}
         botaoCancelar={() => setExibirModal(false)}
@@ -134,7 +134,7 @@ export default function Editar_usuario() {
         setExibir={setExibirModal}
       />
 
-      <TitleTop>✏️ Editar usuário</TitleTop>
+      <TitleTop>✏️ Editar usuário {usuario}</TitleTop>
       <form
         className="p-4 shadow rounded col-md-10 col-lg-8"
         onSubmit={handleSubmit}

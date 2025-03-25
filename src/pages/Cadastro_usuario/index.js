@@ -36,7 +36,7 @@ export default function Cadastro_usuario() {
         setEstado(response.data.uf);
       })
       .catch((error) => {
-        alert("Erro ao buscar CEP:", error);
+        console.log("Erro ao buscar CEP:", error);
       });
   };
 

@@ -22,7 +22,7 @@ export default function Listagem_usuarios() {
 
   return (
     <div>
-        <TitleTop>👤 Usuários Cadastrados</TitleTop>
+        <TitleTop>👤 Usuários cadastrados</TitleTop>
       <TabelaDefault colunas={colunas} dados={usuarios}/>
     </div>
   )

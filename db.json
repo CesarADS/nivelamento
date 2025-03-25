@@ -1,8 +1,7 @@
 {
   "usuarios": [
     {
-      "id": "6727",
-      "usuario": "teste12",
+      "usuario": "teste13",
       "email": "teste12@gmail.com",
       "senha": "123",
       "cep": "88812860",
@@ -10,35 +9,62 @@
       "bairro": "Linha Batista",
       "cidade": "Criciúma",
       "estado": "SC",
+      "status": "ativo",
+      "id": "6727"
+    },
+    {
+      "id": "228f",
+      "usuario": "TESTE15",
+      "email": "teste15@gmail.com",
+      "senha": "123",
+      "cep": "88812860",
+      "rua": "Rodovia Leonardo Bialecki",
+      "bairro": "Linha Batista",
+      "cidade": "Criciúma",
+      "estado": "SC",
+      "status": "excluido"
+    },
+    {
+      "id": "d834",
+      "usuario": "César Augusto",
+      "email": "cesaraalexandrea@gmail.com",
+      "senha": "123",
+      "cep": "88801020",
+      "rua": "Rua Anita Garibaldi",
+      "bairro": "Centro",
+      "cidade": "Criciúma",
+      "estado": "SC",
+      "status": "excluido"
+    }
+  ],
+  "produtos": [
+    {
+      "id": "b136",
+      "nome": "Lápis",
+      "descricao": "Parte do kit de material escolar.",
+      "preco": 100,
       "status": "ativo"
     },
     {
-      "status": "excluido",
-      "id": "e19a"
+      "id": "9db0",
+      "nome": "Bola de futebol",
+      "descricao": "Bola amarela para futebol de campo.",
+      "preco": "289",
+      "status": "excluido"
     },
     {
-      "status": "excluido",
-      "id": "910d"
+      "id": "029c",
+      "nome": "Controle PS2",
+      "descricao": "Controle de PS2 bolado",
+      "preco": "360",
+      "status": "excluido"
     },
     {
-      "status": "excluido",
-      "id": "17df"
-    },
-    {
-      "status": "excluido",
-      "id": "4faa"
-    },
-    {
-      "usuario": "teste1345",
-      "email": "teste12@gmail.com",
-      "senha": "123",
-      "cep": "88812860",
-      "rua": "Rodovia Leonardo Bialecki",
-      "bairro": "Linha Batista",
-      "cidade": "Criciúma",
-      "estado": "SC",
-      "status": "excluido",
-      "id": "b136"
+      "id": "eed8",
+      "nome": "Controle de PS3",
+      "descricao": "Controle de PS3 bolado",
+      "preco": "150",
+      "status": "excluido"
     }
   ]
 }

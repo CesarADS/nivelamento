@@ -11,58 +11,89 @@ const TabelaDefault = ({ colunas, dados }) => {
   const [exibirModal, setExibirModal] = useState(false);
   const [itemParaExcluir, setItemParaExcluir] = useState(null);
   const [rowIndexParaExcluir, setRowIndexParaExcluir] = useState(null);
+  const [nomeItemExcluir, setNomeItemExcluir] = useState("");
 
   const fecharAlert = () => {
     setAlert(null);
   };
 
-  function verLocal() {
-    if (location.pathname === "/visualizar-usuarios") {
-      return "http://localhost:3001/usuarios";
-    }
-  }
-
   function onEditar(item) {
-    navigate("/editar-usuario?id=" + item.id);
+    if (location.pathname === "/visualizar-usuarios") {
+      navigate("/editar-usuario?id=" + item.id);
+    } else if (location.pathname === "/visualizar-produtos") {
+      navigate("/editar-produto?id=" + item.id);
+    }
   }
 
   function confirmarExclusao() {
     if (!itemParaExcluir || rowIndexParaExcluir === null) return;
 
-    const url_rota = verLocal();
+    if (location.pathname === "/visualizar-usuarios") {
+      axios
+        .put(`http://localhost:3001/usuarios/${itemParaExcluir.id}`, {
+          id: itemParaExcluir.id,
+          usuario: itemParaExcluir.usuario,
+          email: itemParaExcluir.email,
+          senha: itemParaExcluir.senha,
+          cep: itemParaExcluir.cep,
+          rua: itemParaExcluir.rua,
+          bairro: itemParaExcluir.bairro,
+          cidade: itemParaExcluir.cidade,
+          estado: itemParaExcluir.estado,
+          status: "excluido",
+        })
+        .then((response) => {
+          setAlert({
+            message: "Usuário excluído com sucesso!",
+            type: "success",
+          });
 
-    axios
-      .put(`${url_rota}/${itemParaExcluir.id}`, {
-        id: itemParaExcluir.id,
-        usuario: itemParaExcluir.usuario,
-        email: itemParaExcluir.email,
-        senha: itemParaExcluir.senha,
-        cep: itemParaExcluir.cep,
-        rua: itemParaExcluir.rua,
-        bairro: itemParaExcluir.bairro,
-        cidade: itemParaExcluir.cidade,
-        estado: itemParaExcluir.estado,
-        status: "excluido",
-      })
-      .then((response) => {
-        setAlert({
-          message: "Item excluído com sucesso!",
-          type: "success",
+          const row = document.getElementById(`row-${rowIndexParaExcluir}`);
+          if (row) {
+            row.remove();
+          }
+
+          setExibirModal(false);
+        })
+        .catch((error) => {
+          console.log("Erro ao excluir:", error);
         });
+    } else if (location.pathname === "/visualizar-produtos") {
+      axios
+        .put(`http://localhost:3001/produtos/${itemParaExcluir.id}`, {
+          id: itemParaExcluir.id,
+          nome: itemParaExcluir.nome,
+          descricao: itemParaExcluir.descricao,
+          preco: itemParaExcluir.preco,
+          status: "excluido",
+        })
+        .then((response) => {
+          setAlert({
+            message: "Produto excluído com sucesso!",
+            type: "success",
+          });
 
-        const row = document.getElementById(`row-${rowIndexParaExcluir}`);
-        if (row) {
-          row.remove();
-        }
+          const row = document.getElementById(`row-${rowIndexParaExcluir}`);
+          if (row) {
+            row.remove();
+          }
 
-        setExibirModal(false);
-      })
-      .catch((error) => {
-        alert("Erro ao excluir:", error);
-      });
+          setExibirModal(false);
+        })
+        .catch((error) => {
+          alert("Erro ao excluir:", error);
+        });
+    }
   }
 
   function abrirModalExcluir(item, rowIndex) {
+
+    if (location.pathname === "/visualizar-usuarios") {
+      setNomeItemExcluir(item.usuario);
+    } else if (location.pathname === "/visualizar-produtos") {
+      setNomeItemExcluir(item.nome);
+    }
+
     setItemParaExcluir(item);
     setRowIndexParaExcluir(rowIndex);
     setExibirModal(true);
@@ -70,16 +101,14 @@ const TabelaDefault = ({ colunas, dados }) => {
 
   return (
     <div className="container mt-4">
-
       <ModalBootstrap
         titulo="Confirmação de exclusão"
-        texto={`Tem certeza que deseja excluir ${itemParaExcluir?.usuario}?`}
+        texto={`Tem certeza que deseja excluir ${nomeItemExcluir}?`}
         botaoConfirmar={confirmarExclusao}
         botaoCancelar={() => setExibirModal(false)}
         exibir={exibirModal}
         setExibir={setExibirModal}
       />
-
 
       {alert && (
         <Alert
@@ -88,7 +117,6 @@ const TabelaDefault = ({ colunas, dados }) => {
           onClose={fecharAlert}
         />
       )}
-
 
       <table className="table">
         <thead className="thead-dark">
