@@ -14,7 +14,31 @@
     },
     {
       "status": "excluido",
-      "id": "9c2a"
+      "id": "e19a"
+    },
+    {
+      "status": "excluido",
+      "id": "910d"
+    },
+    {
+      "status": "excluido",
+      "id": "17df"
+    },
+    {
+      "status": "excluido",
+      "id": "4faa"
+    },
+    {
+      "usuario": "teste1345",
+      "email": "teste12@gmail.com",
+      "senha": "123",
+      "cep": "88812860",
+      "rua": "Rodovia Leonardo Bialecki",
+      "bairro": "Linha Batista",
+      "cidade": "Criciúma",
+      "estado": "SC",
+      "status": "excluido",
+      "id": "b136"
     }
   ]
 }

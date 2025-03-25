@@ -1,43 +1,95 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Alert from "../Alert";
+import ModalBootstrap from "../ModalBootstrap";
 
 const TabelaDefault = ({ colunas, dados }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [alert, setAlert] = useState(null);
+  const [exibirModal, setExibirModal] = useState(false);
+  const [itemParaExcluir, setItemParaExcluir] = useState(null);
+  const [rowIndexParaExcluir, setRowIndexParaExcluir] = useState(null);
+
+  const fecharAlert = () => {
+    setAlert(null);
+  };
 
   function verLocal() {
     if (location.pathname === "/visualizar-usuarios") {
-      const url = "http://localhost:3001/usuarios";
-      return url;
+      return "http://localhost:3001/usuarios";
     }
   }
 
   function onEditar(item) {
-    alert("Editar:", item);
+    navigate("/editar-usuario?id=" + item.id);
   }
 
-  function onExcluir(item, rowIndex) {
+  function confirmarExclusao() {
+    if (!itemParaExcluir || rowIndexParaExcluir === null) return;
+
     const url_rota = verLocal();
 
     axios
-      .put(`${url_rota}/${item.id}`, { status: "excluido" })
+      .put(`${url_rota}/${itemParaExcluir.id}`, {
+        id: itemParaExcluir.id,
+        usuario: itemParaExcluir.usuario,
+        email: itemParaExcluir.email,
+        senha: itemParaExcluir.senha,
+        cep: itemParaExcluir.cep,
+        rua: itemParaExcluir.rua,
+        bairro: itemParaExcluir.bairro,
+        cidade: itemParaExcluir.cidade,
+        estado: itemParaExcluir.estado,
+        status: "excluido",
+      })
       .then((response) => {
-        alert("Item excluído com sucesso!");
-        console.log(response.data);
+        setAlert({
+          message: "Item excluído com sucesso!",
+          type: "success",
+        });
 
-        const row = document.getElementById(`row-${rowIndex}`);
+        const row = document.getElementById(`row-${rowIndexParaExcluir}`);
         if (row) {
           row.remove();
         }
+
+        setExibirModal(false);
       })
       .catch((error) => {
         alert("Erro ao excluir:", error);
       });
   }
 
+  function abrirModalExcluir(item, rowIndex) {
+    setItemParaExcluir(item);
+    setRowIndexParaExcluir(rowIndex);
+    setExibirModal(true);
+  }
+
   return (
     <div className="container mt-4">
+
+      <ModalBootstrap
+        titulo="Confirmação de exclusão"
+        texto={`Tem certeza que deseja excluir ${itemParaExcluir?.usuario}?`}
+        botaoConfirmar={confirmarExclusao}
+        botaoCancelar={() => setExibirModal(false)}
+        exibir={exibirModal}
+        setExibir={setExibirModal}
+      />
+
+
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={fecharAlert}
+        />
+      )}
+
+
       <table className="table">
         <thead className="thead-dark">
           <tr>
@@ -61,7 +113,7 @@ const TabelaDefault = ({ colunas, dados }) => {
                 </button>
                 <button
                   className="btn btn-light btn-sm"
-                  onClick={() => onExcluir(item, rowIndex)}
+                  onClick={() => abrirModalExcluir(item, rowIndex)}
                 >
                   🗑
                 </button>

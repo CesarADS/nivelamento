@@ -2,6 +2,7 @@ import { useState } from "react";
 import { UsuarioContext, useUsuarioContext } from "../../contexts/Usuario";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Alert from "../../components/Alert";
 
 export default function Login() {
 
@@ -9,6 +10,12 @@ export default function Login() {
   const [senha, setSenha] = useState("");
   const {login} = useUsuarioContext(UsuarioContext);
   const navigate = useNavigate();
+
+  const [alert, setAlert] = useState(null);
+
+  const fecharAlerta = () => {
+    setAlert(null);
+  };
   
   async function handleSubmit(e){
     e.preventDefault();
@@ -19,7 +26,10 @@ export default function Login() {
       login({ nome: usuarioInformado, usuarioInformado, logado: true });
       navigate("/");
     } else {
-      alert("Usuario e/ou senha incorretos!");
+      setAlert({
+        message: "Usuário e/ou senha incorretos!",
+        type: "danger",
+      });
       setUsuarioInformado("");
       setSenha("");
     }
@@ -34,6 +44,13 @@ export default function Login() {
             <h4>🔒 Autentique-se</h4>
           </div>
           <div className="card-body">
+            {alert && (
+              <Alert
+                message={alert.message}
+                type={alert.type}
+                onClose={fecharAlerta}
+              />
+            )}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="usuario" className="form-label">

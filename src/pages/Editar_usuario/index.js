@@ -1,15 +1,20 @@
 import TitleTop from "../../components/TitleTop";
 import InputForm from "../../components/InputForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import ModalBootstrap from "../../components/ModalBootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Alert from "../../components/Alert";
 
-export default function Cadastro_usuario() {
+export default function Editar_usuario() {
   const [exibirModal, setExibirModal] = useState(false);
   const navigate = useNavigate();
   const [alert, setAlert] = useState(null);
+
+  // pegar o id do usuario da query
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id_user = queryParams.get("id");
 
   const fecharAlert = () => {
     setAlert(null);
@@ -25,6 +30,26 @@ export default function Cadastro_usuario() {
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
+
+  // fazer consult para pegar os dados do user
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/usuarios/" + id_user)
+      .then((response) => {
+        setUsuario(response.data.usuario);
+        setEmail(response.data.email);
+        setSenha(response.data.senha);
+        setConfirmarSenha(response.data.senha);
+        setCep(response.data.cep);
+        setLogradouro(response.data.rua);
+        setBairro(response.data.bairro);
+        setCidade(response.data.cidade);
+        setEstado(response.data.estado);
+      })
+      .catch((error) => {
+        console.log("Erro ao buscar usuário:", error);
+      });
+  }, []);
 
   const handleCepBlur = () => {
     axios
@@ -45,7 +70,7 @@ export default function Cadastro_usuario() {
 
     if (senha === confirmarSenha) {
       axios
-        .post("http://localhost:3001/usuarios", {
+        .put("http://localhost:3001/usuarios/" + id_user, {
           usuario: usuario,
           email: email,
           senha: senha,
@@ -54,11 +79,11 @@ export default function Cadastro_usuario() {
           bairro: bairro,
           cidade: cidade,
           estado: estado,
-          status: "ativo"
+          status: "ativo",
         })
         .then((response) => {
           setAlert({
-            message: "Usuário cadastrado com sucesso! Redirecionando...",
+            message: "Usuário editado com sucesso! Redirecionando...",
             type: "success",
           });
           setTimeout(() => {
@@ -102,14 +127,14 @@ export default function Cadastro_usuario() {
     <div className="d-flex flex-column justify-content-center align-items-center mt-3 mb-4">
       <ModalBootstrap
         titulo="Cadastro de usuário"
-        texto={`Você está prestes a cadastrar o usuário: ${usuario}. Deseja continuar?`}
+        texto={`Você está prestes a editar o usuário: ${usuario}. Deseja continuar?`}
         botaoConfirmar={botaoConfirmar}
         botaoCancelar={() => setExibirModal(false)}
         exibir={exibirModal}
         setExibir={setExibirModal}
       />
 
-      <TitleTop>👤 Cadastro de Usuário</TitleTop>
+      <TitleTop>✏️ Editar usuário</TitleTop>
       <form
         className="p-4 shadow rounded col-md-10 col-lg-8"
         onSubmit={handleSubmit}
@@ -202,7 +227,7 @@ export default function Cadastro_usuario() {
               type="submit"
               className="btn btn-primary bg-dark border-dark mt-4 mb-2 col-md-2"
             >
-              Cadastrar
+              Editar
             </button>
           </div>
         </div>

@@ -10,6 +10,7 @@ import Cadastro_produtos from "./pages/Cadastro_produtos";
 import Cadastro_usuario from "./pages/Cadastro_usuario";
 import Login from "./pages/Login";
 import Listagem_usuarios from "./pages/Listagem_usuarios";
+import Editar_usuario from "./pages/Editar_usuario";
 
 function PrivateRoute({children}) {
 
@@ -46,6 +47,7 @@ export default function AppRoutes() {
                   />
                   <Route path="/cadastro-usuario" element={<Cadastro_usuario />} />
                   <Route path="/visualizar-usuarios" element={<Listagem_usuarios />} />
+                  <Route path="/editar-usuario" element={<Editar_usuario />} />
                 </Routes>
                 </ProtectedLayout>
               </PrivateRoute>

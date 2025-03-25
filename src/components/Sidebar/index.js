@@ -5,7 +5,7 @@ import styles from "./sidebar.module.css";
 export default function Sidebar() {
   return (
     <div
-      className={`${styles.sidebar} d-flex flex-column vh-100 bg-dark text-light`}
+      className={`${styles.sidebar} d-flex flex-column min-vh-100 bg-dark text-light`}
     >
       <div className="p-3 text-center">
         <img

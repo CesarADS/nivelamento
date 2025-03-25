@@ -14,7 +14,7 @@ export default function Listagem_usuarios() {
           setUsuarios(response.data);
         })
         .catch((error) => {
-          alert("Erro ao buscar os jogadores:", error);
+          alert("Erro ao buscar os usuários:", error);
         });
     }, []);
 
