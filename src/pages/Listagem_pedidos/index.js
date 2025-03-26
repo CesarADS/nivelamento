@@ -1,15 +1,36 @@
+import axios from "axios";
+import TabelaDefault from "../../components/TabelaDefault";
+import { useEffect, useState } from "react";
 import TitleTop from "../../components/TitleTop";
 
 export default function Listagem_pedidos() {
-    return (
-      <TitleTop>
-        
-        <div className="text-center py-4">
-          <h1 className="fw-bold">Bem-vindo a listagem de pedidos!</h1>
-          <p className="fs-4 text-muted mb-0">
-            "Se acho que cheguei no meu limite, logo após tenho certeza."
-          </p>
-        </div>
-      </TitleTop>
-    );
+  const [pedidos, setPedidos] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/pedidos?status=ativo")
+      .then((response) => {
+        const pedidosFormatados = response.data.map((pedido) => ({
+          ...pedido, // Mantém os outros atributos do pedido
+          produtos: pedido.produtos
+            .map((item) => `${item.nome} (${item.quantidade} UN)`)
+            .join(", "), // Transforma os produtos em uma string
+          valor: `R$${pedido.valor.toFixed(2)}`, // Adiciona "R$" antes do valor e formata para 2 casas decimais
+        }));
+
+        setPedidos(pedidosFormatados);
+      })
+      .catch((error) => {
+        alert("Erro ao buscar os pedidos:", error);
+      });
+  }, []);
+
+  const colunas = ["nome", "produtos", "valor", "data"];
+
+  return (
+    <div>
+      <TitleTop>📦 Pedidos cadastrados</TitleTop>
+      <TabelaDefault colunas={colunas} dados={pedidos} />
+    </div>
+  );
 }

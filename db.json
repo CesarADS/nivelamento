@@ -11,30 +11,6 @@
       "estado": "SC",
       "status": "ativo",
       "id": "6727"
-    },
-    {
-      "id": "228f",
-      "usuario": "TESTE15",
-      "email": "teste15@gmail.com",
-      "senha": "123",
-      "cep": "88812860",
-      "rua": "Rodovia Leonardo Bialecki",
-      "bairro": "Linha Batista",
-      "cidade": "Criciúma",
-      "estado": "SC",
-      "status": "excluido"
-    },
-    {
-      "id": "d834",
-      "usuario": "César Augusto",
-      "email": "cesaraalexandrea@gmail.com",
-      "senha": "123",
-      "cep": "88801020",
-      "rua": "Rua Anita Garibaldi",
-      "bairro": "Centro",
-      "cidade": "Criciúma",
-      "estado": "SC",
-      "status": "excluido"
     }
   ],
   "produtos": [
@@ -46,25 +22,34 @@
       "status": "ativo"
     },
     {
-      "id": "9db0",
-      "nome": "Bola de futebol",
-      "descricao": "Bola amarela para futebol de campo.",
-      "preco": "289",
-      "status": "excluido"
-    },
+      "id": "2010",
+      "nome": "Produto teste",
+      "descricao": "produto teste",
+      "preco": "123",
+      "status": "ativo"
+    }
+  ],
+  "pedidos": [
     {
-      "id": "029c",
-      "nome": "Controle PS2",
-      "descricao": "Controle de PS2 bolado",
-      "preco": "360",
-      "status": "excluido"
-    },
-    {
-      "id": "eed8",
-      "nome": "Controle de PS3",
-      "descricao": "Controle de PS3 bolado",
-      "preco": "150",
-      "status": "excluido"
+      "id": "b136",
+      "nome": "Pedido Teste",
+      "produtos": [
+        {
+          "id": "b136",
+          "nome": "Lápis",
+          "quantidade": 1,
+          "preco": 100
+        },
+        {
+          "id": "b136",
+          "nome": "Lápis",
+          "quantidade": 1,
+          "preco": 100
+        }
+      ],
+      "valor": 200,
+      "data": "26/03/2025",
+      "status": "ativo"
     }
   ]
 }

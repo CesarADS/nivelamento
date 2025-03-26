@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar";
 import UsuarioLogadoProvider, { UsuarioContext } from "./contexts/Usuario";
 import { useContext } from "react";
 import Listagem_pedidos from "./pages/Listagem_pedidos";
-import Cadastro_pedidos from "./pages/Cadastro_pedidos";
+import Cadastro_pedidos from "./pages/Cadastro_pedido";
 import Cadastro_produtos from "./pages/Cadastro_produtos";
 import Cadastro_usuario from "./pages/Cadastro_usuario";
 import Login from "./pages/Login";
@@ -14,6 +14,8 @@ import Editar_usuario from "./pages/Editar_usuario";
 import Cadastro_produto from "./pages/Cadastro_produto";
 import Listagem_produtos from "./pages/Listagem_produtos";
 import Editar_produto from "./pages/Editar_produto";
+import Editar_pedido from "./pages/Editar_pedido";
+import Home from "./pages/Home";
 
 function PrivateRoute({children}) {
 
@@ -39,7 +41,7 @@ export default function AppRoutes() {
               <PrivateRoute>
                 <ProtectedLayout>
                 <Routes>
-                  <Route path="/" element={<Listagem_pedidos />} />
+                  <Route path="/" element={<Home />} />
                   <Route
                     path="/cadastro-pedidos"
                     element={<Cadastro_pedidos />}
@@ -54,6 +56,9 @@ export default function AppRoutes() {
                   <Route path="/cadastro-produto" element={<Cadastro_produto />} />
                   <Route path="/visualizar-produtos" element={<Listagem_produtos />} />
                   <Route path="/editar-produto" element={<Editar_produto />} />
+                  <Route path="/cadastrar-pedido" element={<Cadastro_pedidos />} />
+                  <Route path="/visualizar-pedidos" element={<Listagem_pedidos />} />
+                  <Route path="/editar-pedido" element={<Editar_pedido />} />
                 </Routes>
                 </ProtectedLayout>
               </PrivateRoute>

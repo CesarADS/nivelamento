@@ -22,6 +22,8 @@ const TabelaDefault = ({ colunas, dados }) => {
       navigate("/editar-usuario?id=" + item.id);
     } else if (location.pathname === "/visualizar-produtos") {
       navigate("/editar-produto?id=" + item.id);
+    } else if (location.pathname === "/visualizar-pedidos") {
+      navigate("/editar-pedido?id=" + item.id);
     }
   }
 
@@ -70,6 +72,32 @@ const TabelaDefault = ({ colunas, dados }) => {
         .then((response) => {
           setAlert({
             message: "Produto excluído com sucesso!",
+            type: "success",
+          });
+
+          const row = document.getElementById(`row-${rowIndexParaExcluir}`);
+          if (row) {
+            row.remove();
+          }
+
+          setExibirModal(false);
+        })
+        .catch((error) => {
+          alert("Erro ao excluir:", error);
+        });
+    } else if (location.pathname === "/visualizar-pedidos") {
+      axios
+        .put(`http://localhost:3001/pedidos/${itemParaExcluir.id}`, {
+          id: itemParaExcluir.id,
+          nome: itemParaExcluir.nome,
+          produtos: itemParaExcluir.produtos,
+          valor: itemParaExcluir.valor,
+          data: itemParaExcluir.data,
+          status: "excluido",
+        })
+        .then((response) => {
+          setAlert({
+            message: "Pedido excluído com sucesso!",
             type: "success",
           });
 
