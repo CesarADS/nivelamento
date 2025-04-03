@@ -1,16 +1,16 @@
 {
   "usuarios": [
     {
+      "id": "6727",
       "usuario": "teste13",
       "email": "teste12@gmail.com",
       "senha": "123",
-      "cep": "88812860",
-      "rua": "Rodovia Leonardo Bialecki",
-      "bairro": "Linha Batista",
+      "cep": "88801020",
+      "rua": "Rua Anita Garibaldi",
+      "bairro": "Centro",
       "cidade": "Criciúma",
       "estado": "SC",
-      "status": "ativo",
-      "id": "6727"
+      "status": "ativo"
     }
   ],
   "produtos": [
@@ -27,6 +27,13 @@
       "descricao": "produto teste",
       "preco": "123",
       "status": "ativo"
+    },
+    {
+      "id": "c200",
+      "nome": "Bola de basquete",
+      "descricao": "Bola de basquete.",
+      "preco": "30",
+      "status": "excluido"
     }
   ],
   "pedidos": [
@@ -49,6 +56,21 @@
       ],
       "valor": 200,
       "data": "26/03/2025",
+      "status": "ativo"
+    },
+    {
+      "id": "1f44",
+      "nome": "Pedido Andrei",
+      "produtos": [
+        {
+          "id": "b136",
+          "nome": "Lápis",
+          "quantidade": 2,
+          "preco": 100
+        }
+      ],
+      "valor": 200,
+      "data": "27/03/2025",
       "status": "ativo"
     }
   ]
