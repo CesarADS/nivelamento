@@ -5,8 +5,6 @@ import com.senac.nsei.models.repositorys.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,26 +21,19 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public Usuario listarPorID(@PathVariable Long id) {
+    public Usuario buscarPorID(@PathVariable Long id) {
         return usuarioRepository.findById(id).get();
     }
 
     @GetMapping
     public List<Usuario> listar() {
-
         return usuarioRepository.findAll();
     }
 
     @PutMapping
     public ResponseEntity<?> editar(@RequestBody Usuario usuario) {
-        usuarioRepository.save(usuario);
-        return ResponseEntity.ok(usuario);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
-        usuarioRepository.deleteById(id);
-        return ResponseEntity.ok("Deletado");
+        var response = usuarioRepository.save(usuario);
+        return ResponseEntity.ok(response);
     }
 
 }
