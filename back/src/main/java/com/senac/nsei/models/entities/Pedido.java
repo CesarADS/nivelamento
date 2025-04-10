@@ -1,5 +1,6 @@
 package com.senac.nsei.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class Pedido {
 
     private Double valor;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date data;
 
     private String status;
