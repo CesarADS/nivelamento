@@ -1,8 +1,7 @@
 package com.senac.nsei.controllers;
 
-import com.senac.nsei.models.entities.Usuario;
-import com.senac.nsei.object.LoginRequest;
-import com.senac.nsei.services.Token;
+import com.senac.nsei.dtos.LoginRequest;
+import com.senac.nsei.services.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class AuthController {
     // VALIDAR USUARIO EU SEI FAZER
 
     @Autowired
-    private Token tokenService;
+    private TokenService tokenService;
 
     @PostMapping
     @Operation(summary = "Login do usuário", description = "Rota para autenticar um usuário com JWT token.")

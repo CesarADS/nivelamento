@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.senac.nsei.object.LoginRequest;
+import com.senac.nsei.dtos.LoginRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
-public class Token {
+public class TokenService {
 
     @Value("${spring.expiration_time}")
     private Long expirationTime;
