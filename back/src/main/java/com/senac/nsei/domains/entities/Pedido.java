@@ -1,4 +1,4 @@
-package com.senac.nsei.models.entities;
+package com.senac.nsei.domains.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.senac.nsei.models.entities;
+package com.senac.nsei.domains.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.senac.nsei.configurations;
+package com.senac.nsei.presentation.configurations;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

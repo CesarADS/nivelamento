@@ -1,7 +1,7 @@
-package com.senac.nsei.controllers;
+package com.senac.nsei.presentation.controllers;
 
-import com.senac.nsei.models.entities.Pedido;
-import com.senac.nsei.models.repositorys.PedidoRepository;
+import com.senac.nsei.domains.entities.Pedido;
+import com.senac.nsei.domains.repositorys.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

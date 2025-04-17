@@ -1,4 +1,4 @@
-package com.senac.nsei.configurations;
+package com.senac.nsei.presentation.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

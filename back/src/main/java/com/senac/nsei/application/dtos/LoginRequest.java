@@ -1,4 +1,4 @@
-package com.senac.nsei.dtos;
+package com.senac.nsei.application.dtos;
 
 public record LoginRequest(String email, String senha) {
 }

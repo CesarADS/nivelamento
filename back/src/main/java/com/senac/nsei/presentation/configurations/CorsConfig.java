@@ -1,4 +1,4 @@
-package com.senac.nsei;
+package com.senac.nsei.presentation.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

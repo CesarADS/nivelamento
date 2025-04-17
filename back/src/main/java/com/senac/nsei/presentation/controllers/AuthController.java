@@ -1,7 +1,7 @@
-package com.senac.nsei.controllers;
+package com.senac.nsei.presentation.controllers;
 
-import com.senac.nsei.dtos.LoginRequest;
-import com.senac.nsei.services.TokenService;
+import com.senac.nsei.application.dtos.LoginRequest;
+import com.senac.nsei.application.services.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

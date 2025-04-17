@@ -1,7 +1,7 @@
-package com.senac.nsei.controllers;
+package com.senac.nsei.presentation.controllers;
 
-import com.senac.nsei.models.entities.Produto;
-import com.senac.nsei.models.repositorys.ProdutoRepository;
+import com.senac.nsei.domains.entities.Produto;
+import com.senac.nsei.domains.repositorys.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

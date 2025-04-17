@@ -1,8 +1,8 @@
-package com.senac.nsei.configurations;
+package com.senac.nsei.presentation.configurations;
 
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.senac.nsei.services.TokenService;
+import com.senac.nsei.application.services.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
