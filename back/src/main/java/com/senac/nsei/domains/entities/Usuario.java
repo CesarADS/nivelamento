@@ -3,16 +3,15 @@ package com.senac.nsei.domains.entities;
 import com.senac.nsei.application.dtos.usuario.UsuarioSalvarRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "usuario")
 public class Usuario {
-
-    public Usuario(Long id) {
-    }
 
     public Usuario(UsuarioSalvarRequest usuario) {
         this.usuario = usuario.usuario();
@@ -23,7 +22,6 @@ public class Usuario {
         this.bairro = usuario.bairro();
         this.cidade = usuario.cidade();
         this.estado = usuario.estado();
-        this.status = usuario.status();
     }
 
     @Id

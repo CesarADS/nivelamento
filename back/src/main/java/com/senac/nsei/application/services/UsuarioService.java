@@ -8,8 +8,6 @@ import com.senac.nsei.domains.repositorys.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.net.InetSocketAddress;
 import java.util.List;
 
 @Service
@@ -29,14 +27,36 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario salvarUsuario(UsuarioSalvarRequest usuario) {
+    public UsuarioResponse salvarUsuario(UsuarioSalvarRequest usuario) {
         var lUsuario = new Usuario(usuario);
-        return usuarioRepository.save(lUsuario);
+        lUsuario.setStatus("Ativo");
+        usuarioRepository.save(lUsuario);
+        return new UsuarioResponse(lUsuario);
     }
 
     @Override
     public List<UsuarioResponse> listarTodos() {
         return usuarioRepository.findAll().stream().map(UsuarioResponse::new).toList();
+    }
+
+    @Override
+    public UsuarioResponse buscarUsuarioPorId(Long id) {
+        return usuarioRepository.findById(id).map(UsuarioResponse::new).orElse(null);
+    }
+
+    @Override
+    public UsuarioResponse editarUsuario(Long id, UsuarioSalvarRequest usuario) {
+        
+        Usuario userSearch = usuarioRepository.findById(id).orElse(null);
+
+        Usuario usuarioSalvar = new Usuario(usuario);
+        usuarioSalvar.setId(userSearch.getId());
+        usuarioSalvar.setStatus(userSearch.getStatus());
+
+        Usuario response = usuarioRepository.save(usuarioSalvar);
+
+        return new UsuarioResponse(response);
+        
     }
 
 }

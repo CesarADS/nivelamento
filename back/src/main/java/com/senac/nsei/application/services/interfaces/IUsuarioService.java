@@ -9,7 +9,9 @@ import java.util.List;
 public interface IUsuarioService {
 
     Usuario usuarioLogado();
-    Usuario salvarUsuario(UsuarioSalvarRequest usuario);
+    UsuarioResponse salvarUsuario(UsuarioSalvarRequest usuario);
     List<UsuarioResponse> listarTodos();
+    UsuarioResponse buscarUsuarioPorId(Long id);
+    UsuarioResponse editarUsuario(Long id, UsuarioSalvarRequest usuario);
 
 }

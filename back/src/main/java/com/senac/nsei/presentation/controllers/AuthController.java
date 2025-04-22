@@ -12,16 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Autenticação", description = "Rota relacionada a autenticação nas requisições.")
+@Tag(name = "Controlador de autenticação", description = "Rota responsável pela autenticação de usuários para requisições a API.")
 public class AuthController {
-
-    // VALIDAR USUARIO EU SEI FAZER
 
     @Autowired
     private TokenService tokenService;
 
     @PostMapping
-    @Operation(summary = "Login do usuário", description = "Rota para autenticar um usuário com JWT token.")
+    @Operation(summary = "Fazer login", description = "Retorna um token JWT para requisições a API caso o usuário seja válido.")
     public ResponseEntity<?> login(LoginRequest loginRequest) {
         var resultGerarToken = tokenService.gerarToken(loginRequest);
         return ResponseEntity.ok(resultGerarToken);

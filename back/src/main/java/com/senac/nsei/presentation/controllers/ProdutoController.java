@@ -1,8 +1,14 @@
 package com.senac.nsei.presentation.controllers;
 
-import com.senac.nsei.domains.entities.Produto;
-import com.senac.nsei.domains.repositorys.ProdutoRepository;
+import com.senac.nsei.application.dtos.produto.ProdutoResponse;
+import com.senac.nsei.application.dtos.produto.ProdutoSalvarRequest;
+import com.senac.nsei.application.services.ProdutoService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,31 +16,36 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/produto")
+@Tag(name = "Controlador de produtos", description = "Rotas responsáveis pelo controle dos produtos.")
 public class ProdutoController {
 
     @Autowired
-    private ProdutoRepository produtoRepository;
+    private ProdutoService produtoService;
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody Produto produto) {
-        var responseProduto = produtoRepository.save(produto);
-        return ResponseEntity.ok(responseProduto);
+    @Operation(summary = "Criar produto", description = "Cria um novo produto.")
+    public ResponseEntity<ProdutoResponse> salvar(@RequestBody ProdutoSalvarRequest produto) {
+        var responseSalvar = produtoService.salvarProduto(produto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseSalvar);
     }
 
     @GetMapping("/{id}")
-    public Produto buscarPorId(@PathVariable Long id) {
-        return produtoRepository.findById(id).get();
+    @Operation(summary = "Buscar produto", description = "Busca um produto pelo seu ID.")
+    public ProdutoResponse buscarPorId(@PathVariable Long id) {
+        return produtoService.buscarProdutoPorId(id);
     }
 
     @GetMapping
-    public List<Produto> buscarTudo() {
-        return produtoRepository.findAll();
+    @Operation(summary = "Listar produtos", description = "Lista todos os produtos.")
+    public List<ProdutoResponse> buscarTudo() {
+        return produtoService.listarTodos();
     }
 
-    @PutMapping
-    public ResponseEntity<?> editar(@RequestBody Produto produto) {
-        var response = produtoRepository.save(produto);
-        return ResponseEntity.ok(response);
+    @PutMapping("/{id}")
+    @Operation(summary = "Editar produto", description = "Edita um produto pelo seu ID.")
+    public ResponseEntity<ProdutoResponse> editar(@PathVariable Long id, @RequestBody ProdutoSalvarRequest produto) {
+        var response = produtoService.editarProduto(id, produto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }
