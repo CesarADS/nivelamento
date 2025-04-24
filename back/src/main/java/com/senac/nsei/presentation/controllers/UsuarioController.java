@@ -23,9 +23,18 @@ public class UsuarioController {
 
     @PostMapping
     @Operation(summary = "Criar usuário", description = "Cria um novo usuário.")
-    public ResponseEntity<UsuarioResponse> salvar(@RequestBody UsuarioSalvarRequest usuario) {
-        var responseSalvar = usuarioService.salvarUsuario(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseSalvar);
+    public ResponseEntity<?> salvar(@RequestBody UsuarioSalvarRequest usuario) {
+
+        try {
+            var responseSalvar = usuarioService.salvarUsuario(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseSalvar);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+
+
+
     }
 
     @GetMapping("/{id}")

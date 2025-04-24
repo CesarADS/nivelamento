@@ -5,6 +5,7 @@ import com.senac.nsei.domains.entities.Usuario;
 public record UsuarioResponse(
         String usuario,
         String email,
+        String cpf,
         String senha,
         Long cep,
         String rua,
@@ -17,6 +18,7 @@ public record UsuarioResponse(
         this(
                 usuario.getUsuario(),
                 usuario.getEmail(),
+                usuario.getCpf().getNumero(),
                 usuario.getSenha(),
                 usuario.getCep(),
                 usuario.getRua(),

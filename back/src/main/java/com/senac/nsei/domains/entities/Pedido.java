@@ -1,6 +1,7 @@
 package com.senac.nsei.domains.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.senac.nsei.application.dtos.item.ItemResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -23,10 +25,10 @@ public class Pedido {
     private String nome;
 
     @OneToMany(
-        mappedBy = "pedido", 
-        cascade = CascadeType.ALL, 
-        orphanRemoval = true, 
-        fetch = FetchType.LAZY
+            mappedBy = "pedido",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
     private List<ItemPedido> itens = new ArrayList<>();
 
@@ -56,10 +58,10 @@ public class Pedido {
         }
 
         this.valorTotal = this.itens.stream()
-            .filter(Objects::nonNull)
-            .filter(item -> item.getQuantidade() != null && item.getPrecoUnitario() != null)
-            .mapToDouble(item -> item.getQuantidade() * item.getPrecoUnitario())
-            .sum();
+                .filter(Objects::nonNull)
+                .filter(item -> item.getQuantidade() != null && item.getPrecoUnitario() != null)
+                .mapToDouble(item -> item.getQuantidade() * item.getPrecoUnitario())
+                .sum();
     }
 
     // Garante que o valor total seja calculado/atualizado antes de salvar/atualizar
@@ -68,5 +70,42 @@ public class Pedido {
     public void onPrePersistOrUpdate() {
         calcularValorTotal();
     }
+
+    @Override
+    public String toString() {
+
+        return this.itens.stream()
+
+                .filter(Objects::nonNull)
+                .map(item -> {
+                    String nome = item.getPedido().getNome();
+                    Integer quantidade = item.getQuantidade();
+                    String quantidadeStr;
+
+                    quantidadeStr = quantidade + " UN";
+
+                    // Retorna a string formatada para este item
+                    return nome + " (" + quantidadeStr + ")";
+                })
+
+
+                .collect(Collectors.joining(", "));
+
+    }
+
+    public List<ItemResponse> toList() {
+
+        return this.itens.stream()
+                .filter(Objects::nonNull)
+                .map(item -> {
+                    String nome = item.getProduto().getNome();
+                    Integer quantidade = item.getQuantidade();
+                    Double preoUnitario = item.getPrecoUnitario();
+                    return new ItemResponse(nome, quantidade, preoUnitario);
+                })
+                .collect(Collectors.toList());
+
+    }
+
 }
 

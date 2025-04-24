@@ -1,6 +1,7 @@
 package com.senac.nsei.domains.entities;
 
 import com.senac.nsei.application.dtos.usuario.UsuarioSalvarRequest;
+import com.senac.nsei.domains.valueobjects.CPF;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class Usuario {
     public Usuario(UsuarioSalvarRequest usuario) {
         this.usuario = usuario.usuario();
         this.email = usuario.email();
+        this.cpf = new CPF(usuario.cpf());
         this.senha = usuario.senha();
         this.cep = usuario.cep();
         this.rua = usuario.rua();
@@ -29,6 +31,10 @@ public class Usuario {
     private Long id;
     private String usuario;
     private String email;
+
+    @Embedded
+    private CPF cpf;
+
     private String senha;
     private Long cep;
     private String rua;

@@ -3,6 +3,7 @@ package com.senac.nsei.application.dtos.usuario;
 public record UsuarioSalvarRequest(
         String usuario,
         String email,
+        String cpf,
         String senha,
         Long cep,
         String rua,
