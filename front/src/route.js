@@ -1,9 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Sidebar from "./components/Sidebar";
-import UsuarioLogadoProvider, { UsuarioContext } from "./contexts/Usuario";
-import { useContext } from "react";
+import Sidebar from "./components/Sidebar";import UsuarioLogadoProvider, { UsuarioContext } from "./contexts/Usuario";
 import Listagem_pedidos from "./pages/Listagem_pedidos";
 import Cadastro_pedidos from "./pages/Cadastro_pedido";
 import Cadastro_produtos from "./pages/Cadastro_produtos";
@@ -16,23 +14,20 @@ import Listagem_produtos from "./pages/Listagem_produtos";
 import Editar_produto from "./pages/Editar_produto";
 import Editar_pedido from "./pages/Editar_pedido";
 import Home from "./pages/Home";
+import { Provider, useSelector } from "react-redux";
+import store from "./redux/store";
 
 function PrivateRoute({children}) {
 
-  const {usuario} = useContext(UsuarioContext);
-
-  if (!usuario.logado) {
-    return <Navigate to = "/login" replace/>;
-  }
-
-  return children;
+  const token = useSelector(state => state.auth.token);
+  return token ? children : <Navigate to="/login" />;
 
 }
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
-      <UsuarioLogadoProvider>
+      <Provider store={store}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
@@ -65,7 +60,7 @@ export default function AppRoutes() {
             }
           />
         </Routes>
-      </UsuarioLogadoProvider>
+      </Provider>
     </BrowserRouter>
   );
 

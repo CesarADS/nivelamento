@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { UsuarioContext, useUsuarioContext } from "../../contexts/Usuario";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { authService } from "../../service/auth.service";
 import Alert from "../../components/Alert";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../redux/authSlice";
 
 export default function Login() {
 
   const [usuarioInformado, setUsuarioInformado] = useState("");
   const [senha, setSenha] = useState("");
-  const {login} = useUsuarioContext(UsuarioContext);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const [alert, setAlert] = useState(null);
 
@@ -20,10 +22,10 @@ export default function Login() {
   async function handleSubmit(e){
     e.preventDefault();
 
-    const response = await axios.get("http://localhost:3001/usuarios?usuario="+usuarioInformado+"&senha="+senha);
+    const response = await authService.login({ usuarioInformado, senha });
 
-    if (response.data.length > 0) {
-      login({ nome: usuarioInformado, usuarioInformado, logado: true });
+    if (response.length > 0) {
+      dispatch(setToken({ usuario: usuarioInformado, token: response, logado: true }));
       navigate("/");
     } else {
       setAlert({
