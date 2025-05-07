@@ -5,6 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.senac.nsei.application.dtos.LoginRequest;
+import com.senac.nsei.application.services.interfaces.ITokenService;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
-public class TokenService {
+public class TokenService implements ITokenService {
 
     @Value("${spring.expiration_time}")
     private Long expirationTime;
@@ -24,6 +26,7 @@ public class TokenService {
     @Value("${spring.emissor}")
     private String emissor;
 
+    @Override
     public String gerarToken(LoginRequest loginRequest) {
 
         try {
@@ -43,6 +46,7 @@ public class TokenService {
 
     }
 
+    @Override
     public DecodedJWT validarToken(String token){
 
         Algorithm algorithm = Algorithm.HMAC256(secretkey);
