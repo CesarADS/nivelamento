@@ -51,13 +51,10 @@ public class PedidoService implements IPedidoService {
             }).collect(Collectors.toList())
         );
 
-        lPedido.calcularValorTotal();
-
         pedidoRepository.save(lPedido);
 
-        return new PedidoResponse(lPedido); // CRIAR ESTE CONSTRUTOR PARA O DTO
+        return new PedidoResponse(lPedido);
 
     }
 
-    }
 }
