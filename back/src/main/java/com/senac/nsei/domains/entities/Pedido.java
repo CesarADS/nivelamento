@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.senac.nsei.application.dtos.item.ItemResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "pedido")
 public class Pedido {
 
