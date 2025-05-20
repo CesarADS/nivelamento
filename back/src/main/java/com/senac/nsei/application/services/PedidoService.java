@@ -53,6 +53,11 @@ public class PedidoService implements IPedidoService {
         return pedidoRepository.findAll().stream().map(PedidoResponse::new).toList();
     }
 
+    @Override
+    public String toString(Long id) {
+        return pedidoRepository.findById(id).get().toString();
+    }
+    
     private Pedido PedidoSalvarRequestToPedido(PedidoSalvarRequest request, Pedido pedidoExistente) {
 
         Pedido pedidoParaSalvar = pedidoExistente != null ? pedidoExistente : new Pedido();

@@ -11,5 +11,6 @@ public interface IPedidoService {
     PedidoResponse buscarPedidoPorId(Long id);
     PedidoResponse editarPedido(Long id, PedidoSalvarRequest pedido);
     List<PedidoResponse> listarPedidos();
+    String toString(Long id);
     
 }

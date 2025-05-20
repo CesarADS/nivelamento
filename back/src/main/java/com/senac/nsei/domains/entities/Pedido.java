@@ -42,16 +42,6 @@ public class Pedido {
 
     private String status;
 
-    public void addItem(ItemPedido item) {
-        this.itens.add(item);
-        item.setPedido(this);
-    }
-
-    public void removeItem(ItemPedido item) {
-        this.itens.remove(item);
-        item.setPedido(null); // Remove a referência bidirecional
-    }
-
     public void calcularValorTotal() {
 
         if (this.itens == null) {
