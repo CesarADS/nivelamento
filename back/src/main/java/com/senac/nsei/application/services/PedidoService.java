@@ -26,6 +26,9 @@ public class PedidoService implements IPedidoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @Override
     public PedidoResponse salvarPedido(PedidoSalvarRequest pedido) {
         Pedido novoPedido = PedidoSalvarRequestToPedido(pedido, null);
@@ -50,12 +53,45 @@ public class PedidoService implements IPedidoService {
 
     @Override
     public List<PedidoResponse> listarPedidos() {
-        return pedidoRepository.findAll().stream().map(PedidoResponse::new).toList();
+
+        var usuarioLogado = usuarioService.usuarioLogado();
+        if(usuarioLogado.getEmpresa() == null) {
+            return pedidoRepository
+                    .findAll()
+                    .stream()
+                    .filter(pedido -> "Ativo".equals(pedido.getStatus())
+                    && pedido.getCliente().getId() == usuarioLogado.getId())
+                    .map(PedidoResponse::new)
+                    .toList();
+        }else {
+            return pedidoRepository
+                    .findAll()
+                    .stream()
+                    .filter(pedido -> "Ativo".equals(pedido.getStatus())
+                            && pedido.getEmpresa().getId() == usuarioLogado.getEmpresa().getId())
+                    .map(PedidoResponse::new)
+                    .toList();
+        }
     }
 
     @Override
     public String toString(Long id) {
+
         return pedidoRepository.findById(id).get().toString();
+    }
+
+    @Override
+    public PedidoResponse excluirPedido(Long id) {
+
+        Pedido pedidoSearch = pedidoRepository.findById(id).orElse(null);
+
+        pedidoSearch.setStatus("Inativo");
+
+        Pedido response = pedidoRepository.save(pedidoSearch);
+
+        return new PedidoResponse(response);
+
+
     }
     
     private Pedido PedidoSalvarRequestToPedido(PedidoSalvarRequest request, Pedido pedidoExistente) {

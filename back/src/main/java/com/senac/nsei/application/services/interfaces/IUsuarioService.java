@@ -13,5 +13,6 @@ public interface IUsuarioService {
     List<UsuarioResponse> listarTodos();
     UsuarioResponse buscarUsuarioPorId(Long id);
     UsuarioResponse editarUsuario(Long id, UsuarioSalvarRequest usuario);
+    UsuarioResponse excluirUsuario(Long id);
 
 }

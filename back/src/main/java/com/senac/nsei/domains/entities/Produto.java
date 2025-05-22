@@ -23,6 +23,9 @@ public class Produto {
     private Double preco;
     private String status;
 
+    @OneToOne
+    private Empresa empresa;
+
     public Produto(ProdutoSalvarRequest produto) {
         this.nome = produto.nome();
         this.descricao = produto.descricao();

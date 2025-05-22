@@ -32,9 +32,6 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-
-
-
     }
 
     @GetMapping("/{id}")
@@ -51,9 +48,16 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Editar usuário", description = "Edita um usuário pelo seu ID.")
-    public ResponseEntity<?> editar(@PathVariable Long id, @RequestBody UsuarioSalvarRequest usuario) {
+    public ResponseEntity<UsuarioResponse> editar(@PathVariable Long id, @RequestBody UsuarioSalvarRequest usuario) {
         var response = usuarioService.editarUsuario(id, usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Excluir usuário", description = "Define o status do usuário como inativo.")
+    public ResponseEntity<UsuarioResponse> excluir(@PathVariable Long id) {
+        var response = usuarioService.excluirUsuario(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

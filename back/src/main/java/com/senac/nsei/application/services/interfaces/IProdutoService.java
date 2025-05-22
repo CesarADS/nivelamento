@@ -11,5 +11,6 @@ public interface IProdutoService {
     ProdutoResponse buscarProdutoPorId(Long id);
     ProdutoResponse editarProduto(Long id, ProdutoSalvarRequest produto);
     List<ProdutoResponse> listarTodos();
+    ProdutoResponse excluirProduto(Long id);
 
 }

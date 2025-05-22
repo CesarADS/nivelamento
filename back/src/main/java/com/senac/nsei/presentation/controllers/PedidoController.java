@@ -58,6 +58,13 @@ public class PedidoController {
     public String converterParaString(@PathVariable Long id) {
         return pedidoService.toString(id);
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Excluir pedido", description = "Altera o status de um pedido para Inativo.")
+    public ResponseEntity<PedidoResponse> excluir(@PathVariable Long id) {
+        var response = pedidoService.excluirPedido(id);
+        return ResponseEntity.noContent().build();
+    }
     
 
 }

@@ -43,5 +43,7 @@ public class Usuario {
     private String estado;
     private String status;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Empresa empresa;
 
 }

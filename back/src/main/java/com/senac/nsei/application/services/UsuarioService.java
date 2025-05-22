@@ -36,7 +36,12 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public List<UsuarioResponse> listarTodos() {
-        return usuarioRepository.findAll().stream().map(UsuarioResponse::new).toList();
+        return usuarioRepository
+                .findAll()
+                .stream()
+                .filter(usuario -> "Ativo".equals(usuario.getStatus()))
+                .map(UsuarioResponse::new)
+                .toList();
     }
 
     @Override
@@ -57,6 +62,19 @@ public class UsuarioService implements IUsuarioService {
 
         return new UsuarioResponse(response);
         
+    }
+
+    @Override
+    public UsuarioResponse excluirUsuario(Long id) {
+
+        Usuario userSearch = usuarioRepository.findById(id).orElse(null);
+
+        userSearch.setStatus("Inativo");
+
+        Usuario response = usuarioRepository.save(userSearch);
+
+        return new UsuarioResponse(response);
+
     }
 
 }

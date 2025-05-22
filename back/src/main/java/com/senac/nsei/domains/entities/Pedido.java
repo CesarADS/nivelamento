@@ -42,6 +42,13 @@ public class Pedido {
 
     private String status;
 
+    @OneToOne
+    private Empresa empresa;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_cliente_id")
+    private Usuario cliente;
+
     public void calcularValorTotal() {
 
         if (this.itens == null) {

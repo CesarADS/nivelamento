@@ -48,4 +48,11 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PutMapping("/{id}")
+    @Operation(summary = "Excluir produto", description = "Atualiza o status de um produto para Inativo.")
+    public ResponseEntity<ProdutoResponse> exluir(@PathVariable Long id) {
+        var response = produtoService.excluirProduto(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -17,6 +17,9 @@ public class ProdutoService implements IProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @Override
     public ProdutoResponse salvarProduto(ProdutoSalvarRequest produto) {
         var lProduto = new Produto(produto);
@@ -36,6 +39,7 @@ public class ProdutoService implements IProdutoService {
         Produto produtoSearch = produtoRepository.findById(id).orElse(null);
 
         Produto produtoSalvar = new Produto(produto);
+
         produtoSalvar.setId(produtoSearch.getId());
         produtoSalvar.setStatus(produtoSearch.getStatus());
 
@@ -47,7 +51,30 @@ public class ProdutoService implements IProdutoService {
 
     @Override
     public List<ProdutoResponse> listarTodos() {
-        return produtoRepository.findAll().stream().map(ProdutoResponse::new).toList();
+        var empresaUsuarioLogado = usuarioService.usuarioLogado().getEmpresa();
+        if(empresaUsuarioLogado == null) {
+            return null;
+        }else {
+            return produtoRepository
+                    .findAll()
+                    .stream()
+                    .filter(produto -> "Ativo".equals(produto.getStatus())&&
+                            produto.getEmpresa().getId() == empresaUsuarioLogado.getId())
+                    .map(ProdutoResponse::new)
+                    .toList();
+        }
+    }
+
+
+    @Override
+    public ProdutoResponse excluirProduto(Long id) {
+
+        Produto produtoSearch = produtoRepository.findById(id).orElse(null);
+        produtoSearch.setStatus("Inativo");
+        Produto response = produtoRepository.save(produtoSearch);
+
+        return new ProdutoResponse(response);
+
     }
 
 }
