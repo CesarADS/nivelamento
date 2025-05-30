@@ -1,5 +1,7 @@
 package com.senac.nsei.domains.entities;
 
+import com.senac.nsei.domains.valueobjects.CNPJ;
+
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,8 +20,8 @@ public class Empresa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String cnpj;
+    @Column(name = "cnpj", length = 14, nullable = false, unique = true)
+    private CNPJ cnpj;
 
     @Column(nullable = false)
     private String razaoSocial;
@@ -29,7 +31,7 @@ public class Empresa {
     @OneToOne(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     private Vendedor vendedor;
 
-    public Empresa(String cnpj, String razaoSocial, String nomeFantasia) {
+    public Empresa(CNPJ cnpj, String razaoSocial, String nomeFantasia) {
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;

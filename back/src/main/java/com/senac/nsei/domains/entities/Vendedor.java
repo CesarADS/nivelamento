@@ -2,6 +2,7 @@ package com.senac.nsei.domains.entities;
 
 import com.senac.nsei.enums.UsuarioRole;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -18,8 +19,13 @@ import lombok.Setter;
 @Table(name = "vendedores")
 public class Vendedor extends Usuario {
 
+    @Column(nullable = false)
     private String nomeCompleto;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String telefone;
 
     @OneToOne(fetch = FetchType.LAZY)
