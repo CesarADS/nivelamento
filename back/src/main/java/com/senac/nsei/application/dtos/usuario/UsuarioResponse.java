@@ -1,6 +1,6 @@
 package com.senac.nsei.application.dtos.usuario;
 
-import com.senac.nsei.domains.entities.Usuario;
+import com.senac.nsei.domains.entities.UsuarioOld;
 
 public record UsuarioResponse(
         String usuario,
@@ -14,7 +14,7 @@ public record UsuarioResponse(
         String estado,
         String status
 ) {
-    public UsuarioResponse(Usuario usuario) {
+    public UsuarioResponse(UsuarioOld usuario) {
         this(
                 usuario.getUsuario(),
                 usuario.getEmail(),

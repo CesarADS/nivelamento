@@ -3,7 +3,7 @@ package com.senac.nsei.application.services;
 import com.senac.nsei.application.dtos.usuario.UsuarioResponse;
 import com.senac.nsei.application.dtos.usuario.UsuarioSalvarRequest;
 import com.senac.nsei.application.services.interfaces.IUsuarioService;
-import com.senac.nsei.domains.entities.Usuario;
+import com.senac.nsei.domains.entities.UsuarioOld;
 import com.senac.nsei.domains.repositorys.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +17,7 @@ public class UsuarioService implements IUsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public Usuario usuarioLogado() {
+    public UsuarioOld usuarioLogado() {
         var auth = SecurityContextHolder.getContext().getAuthentication();
         String usuario = auth.getName();
         return usuarioRepository
@@ -28,7 +28,7 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public UsuarioResponse salvarUsuario(UsuarioSalvarRequest usuario) {
-        var lUsuario = new Usuario(usuario);
+        var lUsuario = new UsuarioOld(usuario);
         lUsuario.setStatus("Ativo");
         usuarioRepository.save(lUsuario);
         return new UsuarioResponse(lUsuario);
@@ -52,13 +52,13 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public UsuarioResponse editarUsuario(Long id, UsuarioSalvarRequest usuario) {
         
-        Usuario userSearch = usuarioRepository.findById(id).orElse(null);
+        UsuarioOld userSearch = usuarioRepository.findById(id).orElse(null);
 
-        Usuario usuarioSalvar = new Usuario(usuario);
+        UsuarioOld usuarioSalvar = new UsuarioOld(usuario);
         usuarioSalvar.setId(userSearch.getId());
         usuarioSalvar.setStatus(userSearch.getStatus());
 
-        Usuario response = usuarioRepository.save(usuarioSalvar);
+        UsuarioOld response = usuarioRepository.save(usuarioSalvar);
 
         return new UsuarioResponse(response);
         
@@ -67,11 +67,11 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public UsuarioResponse excluirUsuario(Long id) {
 
-        Usuario userSearch = usuarioRepository.findById(id).orElse(null);
+        UsuarioOld userSearch = usuarioRepository.findById(id).orElse(null);
 
         userSearch.setStatus("Inativo");
 
-        Usuario response = usuarioRepository.save(userSearch);
+        UsuarioOld response = usuarioRepository.save(userSearch);
 
         return new UsuarioResponse(response);
 

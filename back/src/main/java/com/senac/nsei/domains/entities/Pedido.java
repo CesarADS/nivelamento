@@ -47,7 +47,7 @@ public class Pedido {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_cliente_id")
-    private Usuario cliente;
+    private UsuarioOld cliente;
 
     public void calcularValorTotal() {
 

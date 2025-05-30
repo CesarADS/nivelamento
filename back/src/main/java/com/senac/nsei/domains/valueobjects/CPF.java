@@ -2,23 +2,23 @@ package com.senac.nsei.domains.valueobjects;
 
 public class CPF {
 
-    private String cpf;
+    private String numero;
 
     public CPF() {
-        this.cpf = "";
+        this.numero = "";
     }
 
+    // Construtor e outros métodos...
     public CPF(String cpf) {
-
         if (cpf == null || !isValid(cpf)) {
             throw new IllegalArgumentException("CPF Inválido");
         }
-
-        this.cpf = cpf;
+        // Garante que apenas os números sejam armazenados
+        this.numero = cpf.replaceAll("[^0-9]", "");
     }
 
     public String getNumero() {
-        return cpf;
+        return this.numero;
     }
 
     private boolean isValid(String cpf) {
@@ -59,7 +59,7 @@ public class CPF {
 
     @Override
     public String toString() {
-        return this.cpf;
+        return this.numero;
     }
 
 }
