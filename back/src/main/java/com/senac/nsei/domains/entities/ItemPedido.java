@@ -1,36 +1,50 @@
 package com.senac.nsei.domains.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "item_pedido")
+@Table(name = "itens_pedido")
 public class ItemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "pedido_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedido_id", nullable = false)
     private Pedido pedido;
 
-    @ManyToOne
-    @JoinColumn(name = "produto_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
+    @Column(nullable = false)
     private Integer quantidade;
-    private Double precoUnitario;
-    
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal precoUnitario;
+
+    // Construtor
+    public ItemPedido(Pedido pedido, Produto produto, Integer quantidade) {
+        this.pedido = pedido;
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.precoUnitario = BigDecimal.valueOf(produto.getPreco());
+    }
+
+    // Método para calcular o subtotal do item
+    public BigDecimal getSubtotal() {
+        if (precoUnitario == null || quantidade == null) {
+            return BigDecimal.ZERO;
+        }
+        return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
+    }
 }

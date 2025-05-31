@@ -2,11 +2,15 @@ package com.senac.nsei.domains.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.senac.nsei.application.dtos.item.ItemResponse;
+import com.senac.nsei.enums.ItemStatus;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,14 +21,16 @@ import java.util.stream.Collectors;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "pedido")
+@Table(name = "pedidos")
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
 
     @OneToMany(
             mappedBy = "pedido",
@@ -34,77 +40,58 @@ public class Pedido {
     )
     private List<ItemPedido> itens = new ArrayList<>();
 
-    private Double valorTotal;
+    @Column(nullable = false, precision = 19, scale = 2)
+    private BigDecimal valorTotal;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.DATE)
-    private Date data;
+    @Column(nullable = false)
+    private LocalDateTime dataPedido;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ItemStatus status;
 
-    @OneToOne
-    private Empresa empresa;
+    // Um pedido não pertence diretamente a uma empresa se ele pode ter produtos de várias.
+    // A ligação com a empresa/vendedor vem através do ItemPedido -> Produto -> Empresa.
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_cliente_id")
-    private UsuarioOld cliente;
+    public Pedido(Cliente cliente) {
+        this.cliente = cliente;
+        this.dataPedido = LocalDateTime.now();
+        this.status = ItemStatus.ATIVO;
+        this.valorTotal = BigDecimal.ZERO;
+    }
 
-    public void calcularValorTotal() {
+    public void adicionarItem(ItemPedido item) {
+        this.itens.add(item);
+        item.setPedido(this); // Garante a relação bidirecional
+        recalcularValorTotal();
+    }
 
+    // Garante que o valor total seja calculado/atualizado antes de salvar/atualizar
+    public void removerItem(ItemPedido item) {
+        this.itens.remove(item);
+        item.setPedido(null);
+        recalcularValorTotal();
+    }
+
+    public void recalcularValorTotal() {
         if (this.itens == null) {
-            this.valorTotal = 0.0;
+            this.valorTotal = BigDecimal.ZERO;
             return;
         }
-
         this.valorTotal = this.itens.stream()
                 .filter(Objects::nonNull)
-                .filter(item -> item.getQuantidade() != null && item.getPrecoUnitario() != null)
-                .mapToDouble(item -> item.getQuantidade() * item.getPrecoUnitario())
-                .sum();
+                .map(ItemPedido::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     // Garante que o valor total seja calculado/atualizado antes de salvar/atualizar
     @PrePersist
     @PreUpdate
     public void onPrePersistOrUpdate() {
-        calcularValorTotal();
+        recalcularValorTotal();
     }
 
-    @Override
-    public String toString() {
-
-        return this.itens.stream()
-
-                .filter(Objects::nonNull)
-                .map(item -> {
-                    String nome = item.getPedido().getNome();
-                    Integer quantidade = item.getQuantidade();
-                    String quantidadeStr;
-
-                    quantidadeStr = quantidade + " UN";
-
-                    // Retorna a string formatada para este item
-                    return nome + " (" + quantidadeStr + ")";
-                })
-
-
-                .collect(Collectors.joining(", "));
-
-    }
-
-    public List<ItemResponse> toList() {
-
-        return this.itens.stream()
-                .filter(Objects::nonNull)
-                .map(item -> {
-                    String nome = item.getProduto().getNome();
-                    Integer quantidade = item.getQuantidade();
-                    Double preoUnitario = item.getPrecoUnitario();
-                    return new ItemResponse(nome, quantidade, preoUnitario);
-                })
-                .collect(Collectors.toList());
-
-    }
+    
 
 }
 

@@ -1,5 +1,6 @@
 package com.senac.nsei.domains.entities;
 
+import com.senac.nsei.enums.ItemStatus;
 import com.senac.nsei.enums.UsuarioRole;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -38,10 +39,15 @@ public abstract class Usuario implements UserDetails {
     @Column(nullable = false)
     private UsuarioRole role;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ItemStatus status;
+
     public Usuario(String login, String password, UsuarioRole role) {
         this.login = login;
         this.password = password;
         this.role = role;
+        this.status = ItemStatus.ATIVO;
     }
 
 

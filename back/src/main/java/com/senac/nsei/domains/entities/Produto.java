@@ -1,6 +1,7 @@
 package com.senac.nsei.domains.entities;
 
 import com.senac.nsei.application.dtos.produto.ProdutoSalvarRequest;
+import com.senac.nsei.enums.ItemStatus;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,18 +19,30 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String nome;
-    private String descricao;
-    private Double preco;
-    private String status;
 
-    @OneToOne
+    @Column(nullable = false)
+    private String descricao;
+
+    @Column(nullable = false)
+    private Double preco;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ItemStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", nullable = false)
     private Empresa empresa;
 
-    public Produto(ProdutoSalvarRequest produto) {
-        this.nome = produto.nome();
-        this.descricao = produto.descricao();
-        this.preco = produto.preco();
+    public Produto(String nome, String descricao, Double preco, ItemStatus status, Empresa empresa) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.status = status;
+        this.empresa = empresa;
     }
+
 
 }
