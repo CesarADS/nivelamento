@@ -2,7 +2,7 @@ package com.senac.nsei.presentation.configurations;
 
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.senac.nsei.application.services.TokenService;
+import com.senac.nsei.application.services.AuthenticationService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import java.util.Collections;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private TokenService tokenService;
+    private AuthenticationService tokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

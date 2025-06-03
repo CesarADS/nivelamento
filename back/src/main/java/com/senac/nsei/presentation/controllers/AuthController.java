@@ -1,7 +1,7 @@
 package com.senac.nsei.presentation.controllers;
 
-import com.senac.nsei.application.dtos.LoginRequest;
-import com.senac.nsei.application.services.TokenService;
+import com.senac.nsei.application.dtos.login.LoginRequest;
+import com.senac.nsei.application.services.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    private TokenService tokenService;
+    private AuthenticationService tokenService;
 
     @PostMapping
     @Operation(summary = "Fazer login", description = "Retorna um token JWT para requisições a API caso o usuário seja válido.")
