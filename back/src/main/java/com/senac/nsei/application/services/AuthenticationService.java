@@ -8,6 +8,7 @@ import com.senac.nsei.application.dtos.login.LoginRequest;
 import com.senac.nsei.application.dtos.login.LoginResponse;
 import com.senac.nsei.application.services.interfaces.IAuthenticationService;
 import com.senac.nsei.domains.entities.Usuario;
+import com.senac.nsei.domains.repositorys.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -22,7 +25,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
-public class AuthenticationService implements IAuthenticationService {
+public class AuthenticationService implements IAuthenticationService, UserDetailsService {
 
     @Value("${spring.expiration_time}")
     private Long expirationTime;
@@ -35,6 +38,15 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        return usuarioRepository.findByLogin(login)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o login: " + login));
+    }
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {

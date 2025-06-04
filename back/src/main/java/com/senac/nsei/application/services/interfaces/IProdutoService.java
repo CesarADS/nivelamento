@@ -7,10 +7,11 @@ import com.senac.nsei.application.dtos.produto.ProdutoResponse;
 
 public interface IProdutoService {
 
-    ProdutoResponse salvarProduto(ProdutoSalvarRequest produto);
-    ProdutoResponse buscarProdutoPorId(Long id);
-    ProdutoResponse editarProduto(Long id, ProdutoSalvarRequest produto);
-    List<ProdutoResponse> listarTodos();
-    ProdutoResponse excluirProduto(Long id);
+    ProdutoResponse criarProduto(ProdutoSalvarRequest produtoSalvarRequest, Long vendedorId);
+    ProdutoResponse atualizarProduto(Long produtoId, ProdutoSalvarRequest produtoSalvarRequest);
+    void inativarProduto(Long produtoId);
+    List<ProdutoResponse> listarMeusProdutos(Long vendedorId);
+    List<ProdutoResponse> listarProdutosParaCatalogo(Long vendedorId);
+    ProdutoResponse obterProdutoPorId(Long produtoId);
 
 }

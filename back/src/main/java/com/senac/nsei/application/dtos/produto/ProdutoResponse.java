@@ -5,16 +5,14 @@ import com.senac.nsei.domains.entities.Produto;
 public record ProdutoResponse(
         String nome,
         String descricao,
-        Double preco,
-        String status
+        Double preco
         ) 
         {
             public ProdutoResponse(Produto produto) {
                 this (
                     produto.getNome(),
                     produto.getDescricao(),
-                    produto.getPreco(),
-                    produto.getStatus()
+                    produto.getPreco()
                 );
         }
     }

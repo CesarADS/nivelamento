@@ -1,8 +1,7 @@
 package com.senac.nsei.presentation.configurations;
 
-
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.senac.nsei.application.services.AuthenticationService;
+import com.senac.nsei.application.services.interfaces.IAuthenticationService; // Use a interface
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,26 +9,32 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService; // Importar
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private AuthenticationService tokenService;
+    private IAuthenticationService authenticationService;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
+            HttpServletResponse response,
+            FilterChain filterChain)
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        if (path.equals("/auth")
+
+        
+        if (path.equals("/auth/login")
                 || path.startsWith("/swagger-ui")
                 || path.startsWith("/v3/api-docs")
                 || path.startsWith("/swagger-resources")
@@ -38,32 +43,30 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.replace("Bearer ", "");
 
             try {
+                DecodedJWT jwt = authenticationService.validarToken(token);
+                String loginUsuario = jwt.getSubject();
 
-                DecodedJWT jwt = tokenService.validarToken(token);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(loginUsuario);
+
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        jwt.getSubject(),
+                        userDetails,
                         null,
-                        Collections.emptyList()
+                        userDetails.getAuthorities()
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
             } catch (Exception e) {
-
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Invalid token!");
+                response.getWriter().write("Token invalido ou expirado!");
                 return;
-
             }
         }
-
         filterChain.doFilter(request, response);
-
     }
 }
