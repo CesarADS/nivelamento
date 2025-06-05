@@ -16,10 +16,7 @@ public record ItemVendidoResponse(
         BigDecimal precoUnitarioCobrado,
         BigDecimal subTotalItem,
         ItemStatus statusPedidoOriginal,
-        ClienteResponseSimplificado dadosCliente
-
-) {
-
+        ClienteResponseSimplificado dadosCliente) {
     public ItemVendidoResponse(ItemPedido itemPedido) {
         this(
                 itemPedido.getId(),
@@ -30,10 +27,6 @@ public record ItemVendidoResponse(
                 itemPedido.getPrecoUnitario(),
                 itemPedido.getSubtotal(),
                 itemPedido.getPedido().getStatus(),
-                new ClienteResponseSimplificado(
-                    itemPedido.getPedido().getCliente().getId(), 
-                    itemPedido.getPedido().getCliente().getNomeCompleto()),
-                    itemPedido.getPedido().getCliente().getEmail()
-        );
+                new ClienteResponseSimplificado(itemPedido.getPedido().getCliente()));
     }
 }

@@ -51,7 +51,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
         
-        var usernamePasswordAuthToken = new UsernamePasswordAuthenticationToken(loginRequest.email(),
+        var usernamePasswordAuthToken = new UsernamePasswordAuthenticationToken(loginRequest.login(),
                 loginRequest.senha());
 
         Authentication autenticacao = authenticationManager.authenticate(usernamePasswordAuthToken);
