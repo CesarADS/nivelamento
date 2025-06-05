@@ -1,18 +1,21 @@
 package com.senac.nsei.application.dtos.administrador;
 
 import com.senac.nsei.domains.entities.Administrador;
+import com.senac.nsei.enums.ItemStatus;
 
 public record AdministradorResponse(
+        Long id,
         String login,
         String email,
-        String status
+        ItemStatus status
 ) {
 
-    public AdministradorResponse(Administrador administrador) {
+    public AdministradorResponse(Administrador admin) {
         this(
-                administrador.getLogin(),
-                administrador.getEmail(),
-                administrador.getStatus().name()
+            admin.getId(),
+            admin.getLogin(),
+            admin.getEmail(),
+            admin.getStatus()
         );
     }
     

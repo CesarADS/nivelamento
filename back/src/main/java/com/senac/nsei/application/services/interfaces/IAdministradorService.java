@@ -1,28 +1,40 @@
 package com.senac.nsei.application.services.interfaces;
 
 import java.util.List;
+import java.util.Optional;
 
-import com.senac.nsei.application.dtos.administrador.AdministradorRequest;
+import com.senac.nsei.application.dtos.administrador.AdministradorRegistroRequest;
 import com.senac.nsei.application.dtos.administrador.AdministradorResponse;
+import com.senac.nsei.application.dtos.pedido.PedidoResponse;
+import com.senac.nsei.application.dtos.produto.ProdutoResponse;
+import com.senac.nsei.application.dtos.usuario.UsuarioResponse;
+import com.senac.nsei.application.dtos.usuario.UsuarioUpdateRequest;
+import com.senac.nsei.enums.ItemStatus;
+import com.senac.nsei.enums.UsuarioRole;
 
 public interface IAdministradorService {
 
-    public AdministradorResponse criarUserAdm(AdministradorRequest administrador);
-    public List<AdministradorResponse> listarUsuariosAdm();
-    public void apagarUserAdm(Long id);
+    AdministradorResponse criarAdministrador(AdministradorRegistroRequest administrador);
+    List<AdministradorResponse> listarAdministradores();
+    void inativarAdministrador(Long id);
 
-    // listarUsuariosCliente()
-    public void apagarUserCliente(Long id);
+    List<UsuarioResponse> listarTodosOsUsuarios(Optional<UsuarioRole> roleFiltro);
 
-    // listarUsuariosVendedor()
-    public void apagarUserVendedor(Long id);
+    UsuarioResponse obterUsuarioPorId(Long usarioId);
 
-    // listarPedidos()
-    public void apagarPedido(Long id);
+    UsuarioResponse atualizarDadosDeUsuarioPorAdmin(Long usuarioId, UsuarioUpdateRequest usuarioUpdateRequest);
 
-    // listarProdutos()
-    public void apagarProduto(Long id);
+    void inativarUsuarioPorAdmin(Long usuarioId);
+
+    List<PedidoResponse> listarTodosOsPedidosAdmin(Optional<ItemStatus> statusFiltro);
     
+    PedidoResponse obterPedidoPorIdAdmin(Long pedidoId);
+
+    void gerenciarStatusPedidoAdmin(Long pedidoId, ItemStatus novoStatus);
+
+    List<ProdutoResponse> listarTodosOsProdutosAdmin(Optional<Long> vendedorIdFiltro);
+
+    void inativarProdutoPorAdmin(Long produtoId);
 
 
 }

@@ -1,7 +1,5 @@
 package com.senac.nsei.domains.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.senac.nsei.application.dtos.item.ItemResponse;
 import com.senac.nsei.enums.ItemStatus;
 
 import jakarta.persistence.*;
@@ -12,10 +10,8 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter

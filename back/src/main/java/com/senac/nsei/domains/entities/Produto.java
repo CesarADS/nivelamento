@@ -1,6 +1,5 @@
 package com.senac.nsei.domains.entities;
 
-import com.senac.nsei.application.dtos.produto.ProdutoSalvarRequest;
 import com.senac.nsei.enums.ItemStatus;
 
 import jakarta.persistence.*;

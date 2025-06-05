@@ -32,7 +32,8 @@ public record ItemVendidoResponse(
                 itemPedido.getPedido().getStatus(),
                 new ClienteResponseSimplificado(
                     itemPedido.getPedido().getCliente().getId(), 
-                    itemPedido.getPedido().getCliente().getNomeCompleto())
+                    itemPedido.getPedido().getCliente().getNomeCompleto()),
+                    itemPedido.getPedido().getCliente().getEmail()
         );
     }
 }

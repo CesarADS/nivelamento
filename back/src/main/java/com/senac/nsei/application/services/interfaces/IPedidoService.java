@@ -4,14 +4,14 @@ import java.util.List;
 
 import com.senac.nsei.application.dtos.pedido.PedidoResponse;
 import com.senac.nsei.application.dtos.pedido.PedidoSalvarRequest;
+import com.senac.nsei.application.dtos.pedido.PedidoUpdateRequest;
 
 public interface IPedidoService {
 
-    PedidoResponse salvarPedido(PedidoSalvarRequest pedido);
-    PedidoResponse buscarPedidoPorId(Long id);
-    PedidoResponse editarPedido(Long id, PedidoSalvarRequest pedido);
-    List<PedidoResponse> listarPedidos();
-    String toString(Long id);
-    PedidoResponse excluirPedido(Long id);
+    PedidoResponse criarPedido(PedidoSalvarRequest pedidoSalvarRequest, Long clienteId);
+    PedidoResponse editarMeuPedido(Long pedidoId, PedidoUpdateRequest pedidoUpdateRequest);
+    void cancelarMeuPedido(Long pedidoId);
+    List<PedidoResponse> listarMeusPedidos(Long clienteId);
+    PedidoResponse obterMeuPedidoPorId(Long pedidoId, Long clienteId);
     
 }
