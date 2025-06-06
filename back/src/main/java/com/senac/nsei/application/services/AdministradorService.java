@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.senac.nsei.application.dtos.administrador.PrimeiroAdminRequest;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,6 +39,41 @@ public class AdministradorService implements IAdministradorService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SetupKeyService setupKeyService;
+
+    @Override
+    @Transactional
+    public AdministradorResponse criarPrimeiroAdministrador(PrimeiroAdminRequest request) {
+        // 1. Valida se o setup já não foi feito
+        if (administradorRepository.count() > 0) {
+            throw new IllegalStateException("O administrador inicial já foi configurado.");
+        }
+
+        // 2. Valida se a chave de setup é válida
+        if (!setupKeyService.isKeyValid(request.setupKey())) {
+            throw new SecurityException("Chave de configuração inválida ou expirada.");
+        }
+
+        // 3. Valida se o login já existe (embora não deva acontecer neste fluxo)
+        if (usuarioRepository.findByLogin(request.login()).isPresent()) {
+            throw new IllegalArgumentException("Login já existente.");
+        }
+
+        // 4. Cria o administrador
+        String senhaCriptografada = passwordEncoder.encode(request.senha());
+        Administrador novoAdmin = new Administrador(request.login(), senhaCriptografada, request.email());
+
+        Administrador adminSalvo = administradorRepository.save(novoAdmin);
+
+        // 5. Invalida a chave para que não possa ser usada novamente
+        setupKeyService.invalidateKey();
+
+        System.out.println("Primeiro administrador criado com sucesso pela aplicação externa.");
+
+        return new AdministradorResponse(adminSalvo);
+    }
 
     // GERENCIAMENTO DE ADMINISTRADORES
     @Override

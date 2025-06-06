@@ -34,7 +34,7 @@ public class ProdutoController {
     @GetMapping
     @Operation(summary = "Listar todos os produtos para o catálogo", description = "Endpoint público que retorna uma lista de todos os produtos ativos de todos os vendedores.")
     public ResponseEntity<List<ProdutoResponse>> listarProdutosCatalogo() {
-        // Agora chama o método de serviço otimizado
+        
         List<ProdutoResponse> todosOsProdutos = produtoService.listarTodosProdutosParaCatalogo();
         return ResponseEntity.ok(todosOsProdutos);
     }

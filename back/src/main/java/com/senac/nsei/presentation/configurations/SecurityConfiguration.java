@@ -42,6 +42,9 @@ public class SecurityConfiguration {
                                                 .requestMatchers(HttpMethod.POST, "/api/vendedores/registrar")
                                                 .permitAll() // Rota de registro de vendedor
 
+                                                .requestMatchers(HttpMethod.POST, "/api/setup/criar-primeiro-admin")
+                                                .permitAll() // Rota de criação do primeiro administrador
+
                                                 // Permissões para Swagger
                                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**",
                                                                 "/swagger-resources/**", "/webjars/**")

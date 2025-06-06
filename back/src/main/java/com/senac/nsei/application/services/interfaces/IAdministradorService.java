@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.senac.nsei.application.dtos.administrador.AdministradorRegistroRequest;
 import com.senac.nsei.application.dtos.administrador.AdministradorResponse;
+import com.senac.nsei.application.dtos.administrador.PrimeiroAdminRequest;
 import com.senac.nsei.application.dtos.pedido.PedidoResponse;
 import com.senac.nsei.application.dtos.produto.ProdutoResponse;
 import com.senac.nsei.application.dtos.usuario.UsuarioResponse;
@@ -35,6 +36,8 @@ public interface IAdministradorService {
     List<ProdutoResponse> listarTodosOsProdutosAdmin(Optional<Long> vendedorIdFiltro);
 
     void inativarProdutoPorAdmin(Long produtoId);
+
+    AdministradorResponse criarPrimeiroAdministrador(PrimeiroAdminRequest request);
 
 
 }
