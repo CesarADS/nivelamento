@@ -78,7 +78,7 @@ public class AdminController {
 
     @PutMapping("/usuarios/{id}")
     @Operation(summary = "Atualizar dados de um usuário", description = "Permite que o administrador atualize informações de qualquer usuário.")
-    public ResponseEntity<?> atualizarUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioUpdateRequest request) {
+    public ResponseEntity<?> atualizarUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioUpdateRequest request) { 
         try {
             UsuarioResponse response = administradorService.atualizarDadosDeUsuarioPorAdmin(id, request);
             return ResponseEntity.ok(response);

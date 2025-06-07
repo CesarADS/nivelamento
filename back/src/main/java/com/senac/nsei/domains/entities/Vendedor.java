@@ -2,6 +2,7 @@ package com.senac.nsei.domains.entities;
 
 import com.senac.nsei.enums.UsuarioRole;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,7 +29,7 @@ public class Vendedor extends Usuario {
     @Column(nullable = false)
     private String telefone;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true) // ADICIONE AQUI
     @JoinColumn(name = "empresa_id", nullable = false, unique = true)
     private Empresa empresa;
 

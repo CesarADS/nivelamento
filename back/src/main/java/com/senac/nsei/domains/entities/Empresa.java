@@ -28,7 +28,7 @@ public class Empresa {
 
     private String nomeFantasia;
 
-    @OneToOne(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "empresa")
     private Vendedor vendedor;
 
     public Empresa(CNPJ cnpj, String razaoSocial, String nomeFantasia) {

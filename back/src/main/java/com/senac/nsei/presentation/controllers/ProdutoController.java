@@ -73,7 +73,7 @@ public class ProdutoController {
     public ResponseEntity<?> atualizarMeuProduto(@PathVariable Long id,
             @RequestBody @Valid ProdutoSalvarRequest request) {
         try {
-            verificarDonoDoProduto(id); // Garante a segurança antes de chamar o service
+            verificarDonoDoProduto(id);
             ProdutoResponse response = produtoService.atualizarProduto(id, request);
             return ResponseEntity.ok(response);
         } catch (NoSuchElementException e) {
