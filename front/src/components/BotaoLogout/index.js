@@ -1,15 +1,19 @@
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/authSlice";
 
 export default function BotaoLogout() {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-
-    return (
-    <button type="button" className="btn btn-light ms-auto" onClick={
-        (e) => {
-            e.preventDefault()
-            dispatch(logout());
-        }}>
-        Logout
+  return (
+    <button
+      type="button"
+      className="btn btn-light ms-auto"
+      onClick={(e) => {
+        e.preventDefault();
+        dispatch(logout());
+      }}
+    >
+      Logout
     </button>
-    );
+  );
 }
