@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="15.0" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demofx.controller.CadastroAdminController"
+      style="-fx-padding: 20; -fx-background-color: #f4f4f4;">
+
+    <Label text="Registro de Administrador" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <VBox spacing="10.0" maxWidth="300.0">
+        <Label text="Secret Key:"/>
+        <TextField fx:id="txtSecretKey" promptText="Insira a chave secreta"/>
+
+        <Label text="Login:"/>
+        <TextField fx:id="txtLogin" promptText="Insira o login"/>
+
+        <Label text="E-mail:"/>
+        <TextField fx:id="txtEmail" promptText="Insira o e-mail"/>
+
+        <Label text="Senha:"/>
+        <PasswordField fx:id="txtSenha" promptText="Insira a senha"/>
+    </VBox>
+
+    <HBox spacing="10.0" alignment="CENTER">
+        <Button onAction="#onRegisterButtonClick" text="Registrar"
+                style="-fx-font-size: 14px; -fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button onAction="#onVoltarMenu" text="Voltar"
+                style="-fx-font-size: 14px; -fx-background-color: #f44336; -fx-text-fill: white;"/>
+    </HBox>
+
+</VBox>
