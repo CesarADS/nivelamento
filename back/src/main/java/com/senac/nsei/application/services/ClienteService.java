@@ -60,18 +60,7 @@ public class ClienteService implements IClienteService {
         Cliente clienteSalvo = clienteRepository.save(novoCliente);
 
         // Retorna o DTO de resposta
-        return new ClienteResponse(
-                clienteSalvo.getNomeCompleto(),
-                clienteSalvo.getLogin(),
-                clienteSalvo.getEmail(),
-                clienteSalvo.getCpf().getNumero(),
-                clienteSalvo.getTelefone(),
-                clienteSalvo.getNumero() != null ? clienteSalvo.getNumero().toString() : "",
-                clienteSalvo.getRua(),
-                clienteSalvo.getBairro(),
-                clienteSalvo.getCidade(),
-                clienteSalvo.getEstado(),
-                clienteSalvo.getCep());
+        return new ClienteResponse(clienteSalvo);
     }
 
     @Override
@@ -80,18 +69,7 @@ public class ClienteService implements IClienteService {
         Cliente cliente = clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new NoSuchElementException("Cliente não encontrado com o ID: " + clienteId));
 
-        return new ClienteResponse(
-                cliente.getNomeCompleto(),
-                cliente.getLogin(),
-                cliente.getEmail(),
-                cliente.getCpf().getNumero(),
-                cliente.getTelefone(),
-                cliente.getNumero() != null ? cliente.getNumero().toString() : "",
-                cliente.getRua(),
-                cliente.getBairro(),
-                cliente.getCidade(),
-                cliente.getEstado(),
-                cliente.getCep());
+                return new ClienteResponse(cliente);
     }
 
     @Override
@@ -116,17 +94,6 @@ public class ClienteService implements IClienteService {
 
         Cliente clienteAtualizado = clienteRepository.save(cliente);
 
-        return new ClienteResponse(
-                clienteAtualizado.getNomeCompleto(),
-                clienteAtualizado.getLogin(),
-                clienteAtualizado.getEmail(),
-                clienteAtualizado.getCpf().getNumero(),
-                clienteAtualizado.getTelefone(),
-                clienteAtualizado.getNumero() != null ? clienteAtualizado.getNumero().toString() : "",
-                clienteAtualizado.getRua(),
-                clienteAtualizado.getBairro(),
-                clienteAtualizado.getCidade(),
-                clienteAtualizado.getEstado(),
-                clienteAtualizado.getCep());
+        return new ClienteResponse(clienteAtualizado);
     }
 }

@@ -67,13 +67,7 @@ public class VendedorService implements IVendedorService {
         Vendedor vendedorSalvo = vendedorRepository.save(novoVendedor);
 
         // 2. Retornar o DTO de resposta
-        return new VendedorResponse(
-                vendedorSalvo.getNomeCompleto(),
-                vendedorSalvo.getEmail(),
-                vendedorSalvo.getTelefone(),
-                vendedorSalvo.getEmpresa().getNomeFantasia(),
-                vendedorSalvo.getEmpresa().getCnpj().getNumero(),
-                vendedorSalvo.getEmpresa().getRazaoSocial());
+        return new VendedorResponse(vendedorSalvo);
     }
 
     @Override
@@ -82,13 +76,7 @@ public class VendedorService implements IVendedorService {
         Vendedor vendedor = vendedorRepository.findById(vendedorId)
                 .orElseThrow(() -> new NoSuchElementException("Vendedor não encontrado com o ID: " + vendedorId));
 
-        return new VendedorResponse(
-                vendedor.getNomeCompleto(),
-                vendedor.getEmail(),
-                vendedor.getTelefone(),
-                vendedor.getEmpresa().getNomeFantasia(),
-                vendedor.getEmpresa().getCnpj().getNumero(),
-                vendedor.getEmpresa().getRazaoSocial());
+        return new VendedorResponse(vendedor);
     }
 
     @Override
@@ -109,13 +97,7 @@ public class VendedorService implements IVendedorService {
 
         Vendedor vendedorAtualizado = vendedorRepository.save(vendedor);
 
-        return new VendedorResponse(
-                vendedorAtualizado.getNomeCompleto(),
-                vendedorAtualizado.getEmail(),
-                vendedorAtualizado.getTelefone(),
-                vendedorAtualizado.getEmpresa().getNomeFantasia(),
-                vendedorAtualizado.getEmpresa().getCnpj().getNumero(),
-                vendedorAtualizado.getEmpresa().getRazaoSocial());
+        return new VendedorResponse(vendedorAtualizado);
     }
 
     @Override

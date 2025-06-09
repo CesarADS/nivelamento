@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.senac.nsei.application.dtos.login.LoginRequest;
 import com.senac.nsei.application.dtos.login.LoginResponse;
 import com.senac.nsei.application.services.interfaces.IAuthenticationService;
 import com.senac.nsei.domains.entities.Usuario;
@@ -12,8 +11,6 @@ import com.senac.nsei.domains.repositorys.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,9 +34,6 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
     private String emissor;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Override
@@ -49,13 +43,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
     }
 
     @Override
-    public LoginResponse login(LoginRequest loginRequest) {
-        
-        var usernamePasswordAuthToken = new UsernamePasswordAuthenticationToken(loginRequest.login(),
-                loginRequest.senha());
-
-        Authentication autenticacao = authenticationManager.authenticate(usernamePasswordAuthToken);
-
+    public LoginResponse obterLoginResponse(Authentication autenticacao) {
         Usuario usuarioAutenticado = (Usuario) autenticacao.getPrincipal();
 
         String token = gerarTokenParaUsuarioAutenticado(usuarioAutenticado);
@@ -64,8 +52,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
                 token,
                 usuarioAutenticado.getId(),
                 usuarioAutenticado.getLogin(),
-                usuarioAutenticado.getRole().name()
-        );
+                usuarioAutenticado.getRole().name());
     }
 
     private String gerarTokenParaUsuarioAutenticado(UserDetails userDetails) {

@@ -36,26 +36,29 @@ public class PedidoService implements IPedidoService {
     @Override
     @Transactional
     public PedidoResponse criarPedido(PedidoSalvarRequest pedidoSalvarRequest, Long clienteId) {
-        // Busca o cliente que está fazendo o pedido
+        
         Cliente cliente = clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new NoSuchElementException("Cliente não encontrado com o ID: " + clienteId));
 
-        // Cria uma nova instância de Pedido, associando ao cliente
         Pedido novoPedido = new Pedido(cliente);
 
-        // Mapeia os DTOs de item para entidades ItemPedido e adiciona ao pedido
         for (ItemRequest itemDto : pedidoSalvarRequest.itensPedido()) {
             Produto produto = produtoRepository.findById(itemDto.produtoId())
                     .orElseThrow(() -> new NoSuchElementException(
                             "Produto não encontrado com o ID: " + itemDto.produtoId()));
 
+            // ADICIONADO: Validação para garantir que o produto e seu vendedor estão ativos
+            if (produto.getStatus() != ItemStatus.ATIVO
+                    || produto.getEmpresa().getVendedor().getStatus() != ItemStatus.ATIVO) {
+                throw new IllegalStateException(
+                        "O produto '" + produto.getNome() + "' não está disponível para compra.");
+            }
+
             ItemPedido itemPedido = new ItemPedido(novoPedido, produto, itemDto.quantidade());
             novoPedido.adicionarItem(itemPedido);
         }
 
-        // Salva o pedido e seus itens (por cascata) e recalcula o total
         Pedido pedidoSalvo = pedidoRepository.save(novoPedido);
-
         return new PedidoResponse(pedidoSalvo);
     }
 

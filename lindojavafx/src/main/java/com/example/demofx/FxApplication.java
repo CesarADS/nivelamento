@@ -10,9 +10,13 @@ import java.io.IOException;
 public class FxApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(FxApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("FX Application");
+
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                FxApplication.class.getResource("/com/example/demofx/cadastro-admin-view.fxml"));
+
+        Scene scene = new Scene(fxmlLoader.load(), 400, 450);
+
+        stage.setTitle("Cadastro de administrador - Nivelamento");
         stage.setScene(scene);
         stage.show();
     }

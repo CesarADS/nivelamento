@@ -53,7 +53,7 @@ public class ProdutoService implements IProdutoService {
     @Transactional(readOnly = true)
     public List<ProdutoResponse> listarTodosProdutosParaCatalogo() {
         // Chama o novo método eficiente do repositório
-        List<Produto> produtosAtivos = produtoRepository.findAllByStatus(ItemStatus.ATIVO);
+        List<Produto> produtosAtivos = produtoRepository.findAllAtivosDeVendedoresAtivos(ItemStatus.ATIVO);
 
         // Mapeia para a resposta
         return produtosAtivos.stream()

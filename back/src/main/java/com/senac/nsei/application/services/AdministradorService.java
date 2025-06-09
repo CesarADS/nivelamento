@@ -2,10 +2,10 @@ package com.senac.nsei.application.services;
 
 import com.senac.nsei.application.dtos.administrador.AdministradorRegistroRequest;
 import com.senac.nsei.application.dtos.administrador.AdministradorResponse;
+import com.senac.nsei.application.dtos.administrador.AdministradorUpdateRequest;
 import com.senac.nsei.application.dtos.pedido.PedidoResponse;
 import com.senac.nsei.application.dtos.produto.ProdutoResponse;
 import com.senac.nsei.application.dtos.usuario.UsuarioResponse;
-import com.senac.nsei.application.dtos.usuario.UsuarioUpdateRequest;
 import com.senac.nsei.application.services.interfaces.IAdministradorService;
 import com.senac.nsei.domains.entities.*;
 import com.senac.nsei.domains.repositorys.*;
@@ -76,6 +76,15 @@ public class AdministradorService implements IAdministradorService {
     }
 
     // GERENCIAMENTO DE ADMINISTRADORES
+
+    @Override
+    @Transactional(readOnly = true)
+    public AdministradorResponse obterMeuPerfil(Long adminId) {
+        Administrador admin = administradorRepository.findById(adminId)
+                .orElseThrow(() -> new NoSuchElementException("Administrador não encontrado com o ID: " + adminId));
+        return new AdministradorResponse(admin);
+    }
+
     @Override
     @Transactional
     public AdministradorResponse criarAdministrador(AdministradorRegistroRequest request) {
@@ -126,28 +135,19 @@ public class AdministradorService implements IAdministradorService {
 
     @Override
     @Transactional
-    public UsuarioResponse atualizarDadosDeUsuarioPorAdmin(Long usuarioId, UsuarioUpdateRequest request) {
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new NoSuchElementException("Usuário não encontrado com o ID: " + usuarioId));
+    public AdministradorResponse atualizarPerfil(Long adminId, AdministradorUpdateRequest request) {
+        Administrador admin = administradorRepository.findById(adminId)
+            .orElseThrow(() -> new NoSuchElementException("Administrador não encontrado com o ID: " + adminId));
 
-        // Apenas o Cliente tem todos os campos de endereço.
-        // A lógica pode ser expandida se outros tipos de usuário também os tiverem.
-        if (usuario instanceof Cliente cliente) {
-            cliente.setEmail(request.email());
-            cliente.setCep(request.cep() != null ? request.cep().toString() : cliente.getCep());
-            cliente.setRua(request.rua());
-            cliente.setBairro(request.bairro());
-            cliente.setCidade(request.cidade());
-            cliente.setEstado(request.estado());
+        admin.setEmail(request.email());
+
+        if (request.novaSenha() != null && !request.novaSenha().isBlank()) {
+            admin.setPassword(passwordEncoder.encode(request.novaSenha()));
         }
 
-        // A senha pode ser atualizada para qualquer tipo de usuário
-        if (request.senha() != null && !request.senha().isBlank()) {
-            usuario.setPassword(passwordEncoder.encode(request.senha()));
-        }
-
-        Usuario usuarioSalvo = usuarioRepository.save(usuario);
-        return UsuarioResponse.fromEntity(usuarioSalvo);
+        Administrador adminSalvo = administradorRepository.save(admin);
+        
+        return new AdministradorResponse(adminSalvo);
     }
 
     @Override

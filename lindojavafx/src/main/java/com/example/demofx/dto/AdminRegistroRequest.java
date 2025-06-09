@@ -1,26 +1,21 @@
-package com.example.demofx.dto; // Garanta que o nome do pacote está correto
+package com.example.demofx.dto;
 
 import com.google.gson.annotations.SerializedName;
 
 public class AdminRegistroRequest {
 
-    @SerializedName("secret_key")
-    private final String secretKey;
     private final String login;
     private final String email;
-
-    @SerializedName("password")
     private final String senha;
 
-    public AdminRegistroRequest(String secretKey, String login, String email, String senha) {
-        this.secretKey = secretKey;
+    @SerializedName("setupKey")
+    private final String setupKey;
+
+    public AdminRegistroRequest(String login, String email, String senha, String setupKey) {
         this.login = login;
         this.email = email;
         this.senha = senha;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
+        this.setupKey = setupKey;
     }
 
     public String getLogin() {
@@ -34,4 +29,10 @@ public class AdminRegistroRequest {
     public String getSenha() {
         return senha;
     }
+
+    public String getSetupKey() {
+        return setupKey;
+    }
+
+    
 }

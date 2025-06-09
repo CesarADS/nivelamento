@@ -5,15 +5,17 @@ import java.util.Optional;
 
 import com.senac.nsei.application.dtos.administrador.AdministradorRegistroRequest;
 import com.senac.nsei.application.dtos.administrador.AdministradorResponse;
+import com.senac.nsei.application.dtos.administrador.AdministradorUpdateRequest;
 import com.senac.nsei.application.dtos.administrador.PrimeiroAdminRequest;
 import com.senac.nsei.application.dtos.pedido.PedidoResponse;
 import com.senac.nsei.application.dtos.produto.ProdutoResponse;
 import com.senac.nsei.application.dtos.usuario.UsuarioResponse;
-import com.senac.nsei.application.dtos.usuario.UsuarioUpdateRequest;
 import com.senac.nsei.enums.ItemStatus;
 import com.senac.nsei.enums.UsuarioRole;
 
 public interface IAdministradorService {
+
+    AdministradorResponse obterMeuPerfil(Long adminId);
 
     AdministradorResponse criarAdministrador(AdministradorRegistroRequest administrador);
     List<AdministradorResponse> listarAdministradores();
@@ -23,7 +25,7 @@ public interface IAdministradorService {
 
     UsuarioResponse obterUsuarioPorId(Long usarioId);
 
-    UsuarioResponse atualizarDadosDeUsuarioPorAdmin(Long usuarioId, UsuarioUpdateRequest usuarioUpdateRequest);
+    AdministradorResponse atualizarPerfil(Long adminId, AdministradorUpdateRequest request);
 
     void inativarUsuarioPorAdmin(Long usuarioId);
 

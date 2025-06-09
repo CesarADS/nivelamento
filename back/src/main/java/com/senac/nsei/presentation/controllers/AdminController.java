@@ -2,11 +2,12 @@ package com.senac.nsei.presentation.controllers;
 
 import com.senac.nsei.application.dtos.administrador.AdministradorRegistroRequest;
 import com.senac.nsei.application.dtos.administrador.AdministradorResponse;
+import com.senac.nsei.application.dtos.administrador.AdministradorUpdateRequest;
 import com.senac.nsei.application.dtos.pedido.PedidoResponse;
 import com.senac.nsei.application.dtos.produto.ProdutoResponse;
 import com.senac.nsei.application.dtos.usuario.UsuarioResponse;
-import com.senac.nsei.application.dtos.usuario.UsuarioUpdateRequest;
 import com.senac.nsei.application.services.interfaces.IAdministradorService;
+import com.senac.nsei.domains.entities.Usuario;
 import com.senac.nsei.enums.ItemStatus;
 import com.senac.nsei.enums.UsuarioRole;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +16,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +32,19 @@ public class AdminController {
     private IAdministradorService administradorService;
 
     // region Gerenciamento de Administradores
+    @GetMapping("/meu-perfil")
+    @Operation(summary = "Obter meu perfil de administrador")
+    public ResponseEntity<AdministradorResponse> obterMeuPerfil() {
+        try {
+            Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            AdministradorResponse response = administradorService.obterMeuPerfil(usuarioLogado.getId());
+            return ResponseEntity.ok(response);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @PostMapping("/administradores")
     @Operation(summary = "Criar um novo administrador", description = "Endpoint para registrar um novo usuário com perfil de administrador.")
     public ResponseEntity<?> criarAdministrador(@RequestBody @Valid AdministradorRegistroRequest request) {
@@ -76,16 +91,19 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/usuarios/{id}")
-    @Operation(summary = "Atualizar dados de um usuário", description = "Permite que o administrador atualize informações de qualquer usuário.")
-    public ResponseEntity<?> atualizarUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioUpdateRequest request) { 
+    // ADICIONE ESTE MÉTODO PARA ATUALIZAR O PRÓPRIO PERFIL
+    @PutMapping("/meu-perfil")
+    @Operation(summary = "Atualizar meu perfil de administrador")
+    public ResponseEntity<?> atualizarMeuPerfil(@RequestBody @Valid AdministradorUpdateRequest request) {
         try {
-            UsuarioResponse response = administradorService.atualizarDadosDeUsuarioPorAdmin(id, request);
+            Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            AdministradorResponse response = administradorService.atualizarPerfil(usuarioLogado.getId(), request);
             return ResponseEntity.ok(response);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @DeleteMapping("/usuarios/{id}")
     @Operation(summary = "Inativar um usuário", description = "Muda o status de um usuário (cliente ou vendedor) para INATIVO.")
