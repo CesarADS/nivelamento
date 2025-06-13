@@ -1,18 +1,26 @@
 import api from "./api";
 
-const cadastrar = async (cadastroRequest) => {
-  const res = await api.post("usuario", cadastroRequest);
+
+
+const cadastroVendedor = async (cadastroVendedorRequest) => {
+  console.log(cadastroVendedorRequest);
+  const res = await api.post("/api/vendedores/registrar", cadastroVendedorRequest);
+  return res.data;
+};
+// /api/clientes/registrar
+const cadastroCliente = async (cadastroClienteRequest) => {
+  const res = await api.post("/api/clientes/registrar", cadastroClienteRequest);
+  return res.data;
+};
+// /api/produtos/meus-produtos
+const cadastroProduto = async (cadastroProdutoRequest) => {
+  const res = await api.post("/api/produtos/meus-produtos", cadastroProdutoRequest);
   return res.data;
 };
 
-const consultar = async () => {
-  const res = await api.post("usuario");
+const cadastroPedido = async (cadastroPedidoRequest) => {
+  const res = await api.post("/api/pedidos", cadastroPedidoRequest);
   return res.data;
 };
 
-const consultarPorId = async (id) => {
-  const res = await api.post("usuario/" + id);
-  return res.data;
-};
-
-export const cadastroService = { login, cadastrar, consultar, consultarPorId };
+export const cadastroService = { cadastroVendedor, cadastroCliente, cadastroProduto, cadastroPedido };

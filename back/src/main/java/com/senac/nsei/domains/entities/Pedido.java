@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -51,7 +53,8 @@ public class Pedido {
 
     public Pedido(Cliente cliente) {
         this.cliente = cliente;
-        this.dataPedido = LocalDateTime.now();
+        ZonedDateTime dataHoraComFuso = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+        this.dataPedido = dataHoraComFuso.toLocalDateTime();
         this.status = ItemStatus.ATIVO;
         this.valorTotal = BigDecimal.ZERO;
     }

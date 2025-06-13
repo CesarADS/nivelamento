@@ -16,3 +16,10 @@ code {
   display: flex;
   justify-content: center;
 }
+
+button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,18 +1,38 @@
 .sidebar {
-    width: 250px;
-    transition: width 0.3s;
+  width: 250px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
 }
 
-.sidebar .collapsed {
-    width: 80px;
+.menuItem {
+  color: #adb5bd;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.sidebar .navlink{
-    padding: 10px;
-    font-size: 16px;
+.menuItem:hover {
+  color: white;
+  background-color: rgba(13, 110, 253, 0.2);
 }
 
-.sidebar .collapse .navlink{
-    font-size: 14px;
-    padding-left: 25px;
+
+.menuItemActive {
+  color: white;
+  background-color: rgba(13, 110, 253, 0.2);
+  border-left: 3px solid #0d6efd;
+}
+
+.submenu {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-left: 3px solid #0d6efd;
+}
+
+/* Animação suave para o dropdown */
+.collapse {
+  transition: all 0.3s ease;
+}
+
+/* Ícone de seta com animação */
+.bi-chevron-down, .bi-chevron-up {
+  transition: transform 0.3s ease;
 }

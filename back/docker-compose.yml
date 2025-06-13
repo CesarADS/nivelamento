@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Serviço do Banco de Dados PostgreSQL
+  db:
+    image: postgres:15 # Imagem oficial do PostgreSQL
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres           # Usuário que sua aplicação vai usar
+      POSTGRES_PASSWORD: postgres     # Senha para o usuário
+      POSTGRES_DB: nsei        # Nome do banco de dados que será criado
+    ports:
+      # Mapeia a porta 5432 do contêiner para a 5433 da sua máquina
+      # para não conflitar com um possível Postgres já instalado.
+      - "5433:5432"
+    volumes:
+      # Garante que os dados do banco persistam
+      - postgres-data:/var/lib/postgresql/data
+
+  # Serviço da sua Aplicação Spring Boot
+  backend:
+    build: . # Constrói a imagem a partir do Dockerfile na pasta atual
+    container_name: spring-app
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db # Garante que o banco de dados inicie antes da sua aplicação
+    environment:
+      # IMPORTANTE: Configurações para o Spring se conectar ao PostgreSQL no Docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/nsei
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+# Define o volume para persistir os dados do banco
+volumes:
+  postgres-data:

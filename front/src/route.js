@@ -1,61 +1,197 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Sidebar from "./components/Sidebar";import UsuarioLogadoProvider, { UsuarioContext } from "./contexts/Usuario";
-import Listagem_pedidos from "./pages/Listagem_pedidos";
-import Cadastro_pedidos from "./pages/Cadastro_pedido";
-import Cadastro_produtos from "./pages/Cadastro_produtos";
-import Cadastro_usuario from "./pages/Cadastro_usuario";
+import Sidebar from "./components/Sidebar";
+import CadastroPedidos from "./pages/VisualizarProdutos";
 import Login from "./pages/Login";
-import Listagem_usuarios from "./pages/Listagem_usuarios";
-import Editar_usuario from "./pages/Editar_usuario";
-import Cadastro_produto from "./pages/Cadastro_produto";
-import Listagem_produtos from "./pages/Listagem_produtos";
-import Editar_produto from "./pages/Editar_produto";
-import Editar_pedido from "./pages/Editar_pedido";
+import EditarUsuario from "./pages/EditarUsuario";
+import CadastroProduto from "./pages/CadastroProduto";
+import ListagemProdutos from "./pages/ListagemProdutos";
+import EditarProduto from "./pages/EditarProduto";
+import EditarPedido from "./pages/EditarPedido";  
 import Home from "./pages/Home";
 import { Provider, useSelector } from "react-redux";
 import store from "./redux/store";
+import Registro from "./pages/Registro";
+import Carrinho from "./pages/Carrinho";
+import Perfil from "./pages/Perfil";
+import PerfilEditar from "./pages/PerfilEditar";
+import MeusPedidos from "./pages/MeusPedidos";
+import DetalhesPedido from "./pages/DetalhesPedido";
+import MeusProdutosVendidos from "./pages/MeusProdutosVendidos";
 
-function PrivateRoute({children}) {
 
-  const token = useSelector(state => state.auth.token);
-  return token ? children : <Navigate to="/login" />;
-
-}
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Provider store={store}>
         <Routes>
+          {/* Rotas públicas */}
           <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
+
+          {/* Rotas privadas */}
           <Route
             path="/*"
             element={
               <PrivateRoute>
-                <ProtectedLayout>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  {/* Rotas comuns a todos os perfis */}
                   <Route
-                    path="/cadastro-pedidos"
-                    element={<Cadastro_pedidos />}
+                    path="/perfil"
+                    element={
+                      <RoleBasedRoute
+                        roleRequired={["CLIENTE", "VENDEDOR", "ADMIN"]}
+                      >
+                        <DynamicLayout>
+                          <Perfil />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
                   />
                   <Route
-                    path="/cadastro-produtos"
-                    element={<Cadastro_produtos />}
+                    path="/perfil/editar"
+                    element={
+                      <RoleBasedRoute
+                        roleRequired={["CLIENTE", "VENDEDOR", "ADMIN"]}
+                      >
+                        <DynamicLayout>
+                          <PerfilEditar />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
                   />
-                  <Route path="/cadastro-usuario" element={<Cadastro_usuario />} />
-                  <Route path="/visualizar-usuarios" element={<Listagem_usuarios />} />
-                  <Route path="/editar-usuario" element={<Editar_usuario />} />
-                  <Route path="/cadastro-produto" element={<Cadastro_produto />} />
-                  <Route path="/visualizar-produtos" element={<Listagem_produtos />} />
-                  <Route path="/editar-produto" element={<Editar_produto />} />
-                  <Route path="/cadastrar-pedido" element={<Cadastro_pedidos />} />
-                  <Route path="/visualizar-pedidos" element={<Listagem_pedidos />} />
-                  <Route path="/editar-pedido" element={<Editar_pedido />} />
+
+                  {/* Rotas exclusivas para comprador */}
+                  <Route
+                    path="/carrinho"
+                    element={
+                      <RoleBasedRoute roleRequired={["CLIENTE"]}>
+                        <DynamicLayout>
+                          <Carrinho />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/meus-pedidos"
+                    element={
+                      <RoleBasedRoute roleRequired={["CLIENTE"]}>
+                        <DynamicLayout>
+                          <MeusPedidos />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/meus-pedidos/:id"
+                    element={
+                      <RoleBasedRoute roleRequired={["CLIENTE"]}>
+                        <DynamicLayout>
+                          <DetalhesPedido />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+                  <Route
+                    path="/produtos"
+                    element={
+                      <RoleBasedRoute roleRequired={["CLIENTE"]}>
+                        <DynamicLayout>
+                          <CadastroPedidos />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+
+                  {/* Rotas exclusivas para vendedor */}
+                  <Route
+                    path="/home"
+                    element={
+                      <RoleBasedRoute roleRequired={["VENDEDOR", "ADMIN"]}>
+                        <DynamicLayout>
+                          <Home />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/cadastro-produto"
+                    element={
+                      <RoleBasedRoute roleRequired={["VENDEDOR"]}>
+                        <DynamicLayout>
+                          <CadastroProduto />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+
+                 
+
+                  <Route
+                    path="/visualizar-produtos"
+                    element={
+                      <RoleBasedRoute roleRequired={["VENDEDOR"]}>
+                        <DynamicLayout>
+                          <ListagemProdutos />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+
+                
+
+                  <Route
+                    path="/editar-usuario/:id"
+                    element={
+                      <RoleBasedRoute roleRequired={["VENDEDOR"]}>
+                        <DynamicLayout>
+                          <EditarUsuario />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/editar-pedido/:id"
+                    element={
+                      <RoleBasedRoute roleRequired={["VENDEDOR"]}>
+                        <DynamicLayout>
+                          <EditarPedido />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/editar-produto/:id"
+                    element={
+                      <RoleBasedRoute roleRequired={["VENDEDOR"]}>
+                        <DynamicLayout>
+                          <EditarProduto />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+                 <Route
+                    path="/meus-produtos-vendidos/"
+                    element={
+                      <RoleBasedRoute roleRequired={["VENDEDOR"]}>
+                        <DynamicLayout>
+                          <MeusProdutosVendidos />
+                        </DynamicLayout>
+                      </RoleBasedRoute>
+                    }
+                  />
+                  
+
+                  <Route path="/" element={<Navigate to="/login" />} />
+                  <Route path="*" element={<Navigate to="/login" />} />
                 </Routes>
-                </ProtectedLayout>
               </PrivateRoute>
             }
           />
@@ -63,19 +199,36 @@ export default function AppRoutes() {
       </Provider>
     </BrowserRouter>
   );
+}
+function PrivateRoute({ children }) {
+  const token = useSelector(state => state.auth.token);
+  console.log(token, "token");
+  return token ? children : <Navigate to="/login" />;
+}
 
-function ProtectedLayout({ children }) {
+function RoleBasedRoute({ roleRequired, children }) {
+  const userRole = useSelector(state => state.auth?.role);
+  console.log(userRole, "userRole");
+  if (roleRequired.includes(userRole)) {
+    return children;
+  }
+  return <Navigate to="/login" />;
+}
+
+function DynamicLayout({ children }) {
+  const userRole = useSelector(state => state.auth?.role);
+  const showSidebar = ["VENDEDOR", "ADMIN"].includes(userRole);
+
   return (
-    <>
-      <Header />
-      <div className="d-flex">
-        <Sidebar />
-        <div className="flex-grow-1 p-4">
+    <div className="d-flex flex-column" style={{ height: "100vh" }}>
+      <Header role={userRole} />
+      <div className="d-flex flex-grow-1" style={{ overflow: "hidden" }}>
+        {showSidebar && <Sidebar role={userRole} />}
+        <div className="flex-grow-1 p-4" style={{ overflowY: "auto" }}>
           {children}
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
-}
 }

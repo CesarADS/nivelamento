@@ -6,7 +6,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   const irParaCadastroPedido = () => {
-    navigate("/cadastro-pedidos");
+    navigate("/cadastro-produto");
   };
 
   return (
@@ -27,7 +27,7 @@ export default function Home() {
             className="btn btn-primary bg-dark border-dark mt-4 mb-2"
             onClick={irParaCadastroPedido}
           >
-            Cadastrar um pedido
+            Cadastrar um produto
           </button>
         </div>
       </div>

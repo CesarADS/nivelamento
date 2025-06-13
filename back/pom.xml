@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>17</java.version>
+        <lombok.version>1.18.32</lombok.version>
         <org.springdoc.version>2.5.0</org.springdoc.version>
         <com.auth0.version>4.4.0</com.auth0.version>
     </properties>
@@ -66,7 +67,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -78,6 +80,22 @@
 
     <build>
         <plugins>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+                <executable>C:\Java\jdk-17\bin\javac.exe</executable>
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>${lombok.version}</version>
+                    </path>
+                </annotationProcessorPaths>
+            </configuration>
+        </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

@@ -2,7 +2,9 @@ import axios from "axios";
 import store from "../redux/store";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: 'http://localhost:8080',
+  timeout: 1000,
+  headers: {'Content-Type': 'application/json'}
 });
 
 api.interceptors.request.use((config) => {

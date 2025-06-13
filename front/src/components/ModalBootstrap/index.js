@@ -9,7 +9,7 @@ export default function ModalBootstrap({
   return (
     <>
       {exibir && (
-        <div className="modal show d-block" tabIndex="-1" role="dialog">
+        <div className="modal show d-block"  role="dialog">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
